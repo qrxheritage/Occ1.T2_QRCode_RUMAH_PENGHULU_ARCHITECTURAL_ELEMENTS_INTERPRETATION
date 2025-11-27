@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Penghulu Abu Seman - Pillars (Tiang Seri)</title>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #CD853F;
+            --dark-brown: #5C3317;
+            --light-bg: #FFF8F0;
+            --text-dark: #2C1810;
+            --text-light: #6B5244;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #FFF8F0 0%, #F5E6D3 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .lang-btn.active {
+            background: white;
+            color: var(--primary-color);
+            border-color: white;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .header-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease 0.2s backwards;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.95;
+            animation: fadeInDown 1s ease 0.4s backwards;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Main Content */
+        .content-wrapper {
+            margin-top: -30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .description-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            text-align: justify;
+        }
+        
+        /* Did You Know Card */
+        .fact-box {
+            background: linear-gradient(135deg, #FFF8DC 0%, #FFE4B5 100%);
+            border-left: 5px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fact-box::before {
+            content: '💡';
+            position: absolute;
+            font-size: 150px;
+            right: -20px;
+            bottom: -40px;
+            opacity: 0.1;
+        }
+        
+        .fact-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .fact-title i {
+            color: #FFD700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .fact-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        
+        .fact-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Action Buttons */
+        .action-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+        }
+        
+        .action-card.model-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .action-card.feedback-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .action-card.quiz-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .action-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .action-description {
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .model-card .btn-primary {
+            color: #667eea;
+        }
+        
+        .feedback-card .btn-primary {
+            color: #f5576c;
+        }
+        
+        .quiz-card .btn-primary {
+            color: #11998e;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+        
+        footer i {
+            color: #e74c3c;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(0.9); }
+            20%, 40% { transform: scale(1.1); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .action-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            .lang-btn {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Video Section */
+        .video-section {
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .video-container {
+            margin-top: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            background: #000;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 600px;
+        }
+        
+        .video-description {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .video-description i {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">
+                <i class="fas fa-globe"></i> English
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('ms')" data-lang="ms">
+                <i class="fas fa-globe"></i> Melayu
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">
+                <i class="fas fa-globe"></i> 中文
+            </button>
+        </div>
+        
+        <div class="header-icon">
+            <i class="fas fa-columns"></i>
+        </div>
+        <h1 data-translate="header-title">Rumah Penghulu Abu Seman</h1>
+        <p class="subtitle" data-translate="header-subtitle">Pillars (Tiang Seri) - Traditional Malay Architecture</p>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            
+            <!-- Description Section -->
+            <div class="card reveal">
+                <h2 class="section-title">
+                    <i class="fas fa-book-open"></i>
+                    <span data-translate="section-description">Description</span>
+                </h2>
+                <p class="description-text" data-translate="description-text">
+                    The pillars (<em>tiang seri</em>) of Rumah Penghulu Abu Seman illustrate sophisticated traditional Malay building technology. The structure primarily uses prefabricated timber elements joined together without nails. This meticulous construction method allowed the house to be easily deconstructed piece by piece and moved to a new location. This ancient technology allowed Rumah Penghulu Abu Seman to be dismantled, transported from Kedah, and rebuilt in Kuala Lumpur between 1996 and 1997.
+                </p>
+            </div>
+            
+            <!-- Did You Know Fact Box -->
+            <div class="card fact-box reveal">
+                <h2 class="fact-title">
+                    <i class="fas fa-lightbulb"></i>
+                    <span data-translate="fact-title">Did You Know?</span>
+                </h2>
+                <div class="fact-content">
+                    <p class="fact-label">
+                        <i class="fas fa-wind"></i>
+                        <span data-translate="fact-label">Climatic Design:</span>
+                    </p>
+                    <p data-translate="fact-text">
+                        The pillars elevate the house structure, contributing to the raised floor level which is a key climatic design principle of traditional Malay houses. Elevated floors enable cross ventilation beneath the floor, helping to cool the structure and materials.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Video Section -->
+            <div class="card video-section reveal">
+                <h2 class="section-title">
+                    <i class="fas fa-video"></i>
+                    <span data-translate="video-title">3D Construction Model</span>
+                </h2>
+                <div class="video-container">
+                    <video controls preload="metadata">
+                        <source src="rumah-penghulu-abu-seman-3d.mp4" type="video/mp4">
+                        <span data-translate="video-error">Your browser does not support the video tag.</span>
+                    </video>
+                </div>
+                <p class="video-description">
+                    <i class="fas fa-info-circle"></i>
+                    <span data-translate="video-description">Watch this detailed 3D construction animation of Rumah Penghulu Abu Seman from Badan Warisan Malaysia</span>
+                </p>
+            </div>
+            
+            <!-- Action Buttons Section -->
+            <div class="action-section">
+                <!-- 3D Model Card -->
+                <div class="action-card model-card reveal">
+                    <i class="fas fa-cube action-icon"></i>
+                    <h3 class="action-title" data-translate="model-title">View 3D Model</h3>
+                    <p class="action-description" data-translate="model-description">
+                        Explore the intricate details of the traditional pillar in an interactive 3D environment
+                    </p>
+                    <a href="https://sketchfab.com/3d-models/7b56202f399643119ecd2aec78d61580" 
+                       target="_blank" 
+                       class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                        <span data-translate="model-button">Explore More</span>
+                    </a>
+                </div>
+                
+                <!-- Feedback Form Card -->
+                <div class="action-card feedback-card reveal">
+                    <i class="fas fa-comment-dots action-icon"></i>
+                    <h3 class="action-title" data-translate="feedback-title">Share Your Feedback</h3>
+                    <p class="action-description" data-translate="feedback-description">
+                        Help us improve by sharing your thoughts and experiences with this cultural heritage
+                    </p>
+                    <a href="https://docs.google.com/forms/d/16utQ6j-jOOymM-u_OnStW7v8WxXpVo8dsPJca0ePiyQ/edit" 
+                       target="_blank" 
+                       class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        <span data-translate="feedback-button">Give Feedback</span>
+                    </a>
+                </div>
+                
+                <!-- Quiz Card -->
+                <div class="action-card quiz-card reveal">
+                    <i class="fas fa-brain action-icon"></i>
+                    <h3 class="action-title" data-translate="quiz-title">Test Your Knowledge</h3>
+                    <p class="action-description" data-translate="quiz-description">
+                        Challenge yourself with an interactive quiz about Rumah Penghulu Abu Seman pillars
+                    </p>
+                    <a href="https://wordwall.net/play/102469/728/838" 
+                       target="_blank" 
+                       class="btn btn-primary">
+                        <i class="fas fa-play-circle"></i>
+                        <span data-translate="quiz-button">Take Quiz</span>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>
+            <span data-translate="footer-text">Preserving Cultural Heritage with</span> <i class="fas fa-heart"></i>
+        </p>
+        <p style="margin-top: 8px; opacity: 0.7;">
+            <i class="fas fa-info-circle"></i> 
+            <span data-translate="footer-subtext">Traditional Malay Architecture Education Initiative</span>
+        </p>
+    </footer>
+    
+    <!-- JavaScript for Scroll Animations and Translation -->
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                'header-title': 'Rumah Penghulu Abu Seman',
+                'header-subtitle': 'Pillars (Tiang Seri) - Traditional Malay Architecture',
+                'section-description': 'Description',
+                'description-text': 'The pillars (<em>tiang seri</em>) of Rumah Penghulu Abu Seman illustrate sophisticated traditional Malay building technology. The structure primarily uses prefabricated timber elements joined together without nails. This meticulous construction method allowed the house to be easily deconstructed piece by piece and moved to a new location. This ancient technology allowed Rumah Penghulu Abu Seman to be dismantled, transported from Kedah, and rebuilt in Kuala Lumpur between 1996 and 1997.',
+                'fact-title': 'Did You Know?',
+                'fact-label': 'Climatic Design:',
+                'fact-text': 'The pillars elevate the house structure, contributing to the raised floor level which is a key climatic design principle of traditional Malay houses. Elevated floors enable cross ventilation beneath the floor, helping to cool the structure and materials.',
+                'video-title': '3D Construction Model',
+                'video-description': 'Watch this detailed 3D construction animation of Rumah Penghulu Abu Seman from Badan Warisan Malaysia',
+                'video-error': 'Your browser does not support the video tag.',
+                'model-title': 'View 3D Model',
+                'model-description': 'Explore the intricate details of the traditional pillar in an interactive 3D environment',
+                'model-button': 'Explore More',
+                'feedback-title': 'Share Your Feedback',
+                'feedback-description': 'Help us improve by sharing your thoughts and experiences with this cultural heritage',
+                'feedback-button': 'Give Feedback',
+                'quiz-title': 'Test Your Knowledge',
+                'quiz-description': 'Challenge yourself with an interactive quiz about Rumah Penghulu Abu Seman pillars',
+                'quiz-button': 'Take Quiz',
+                'footer-text': 'Preserving Cultural Heritage with',
+                'footer-subtext': 'Traditional Malay Architecture Education Initiative'
+            },
+            ms: {
+                'header-title': 'Rumah Penghulu Abu Seman',
+                'header-subtitle': 'Tiang Seri - Seni Bina Tradisional Melayu',
+                'section-description': 'Penerangan',
+                'description-text': 'Tiang (<em>tiang seri</em>) Rumah Penghulu Abu Seman menggambarkan teknologi binaan tradisional Melayu yang canggih. Struktur ini menggunakan elemen kayu siap pasang yang disambung tanpa paku. Kaedah pembinaan yang teliti ini membolehkan rumah dibongkar sekeping demi sekeping dan dipindahkan ke lokasi baru. Teknologi purba ini membolehkan Rumah Penghulu Abu Seman dibongkar, diangkut dari Kedah, dan dibina semula di Kuala Lumpur antara 1996 dan 1997.',
+                'fact-title': 'Tahukah Anda?',
+                'fact-label': 'Reka Bentuk Iklim:',
+                'fact-text': 'Tiang-tiang menaikkan struktur rumah, menyumbang kepada tahap lantai yang tinggi yang merupakan prinsip reka bentuk iklim utama rumah tradisional Melayu. Lantai yang tinggi membolehkan pengudaraan silang di bawah lantai, membantu menyejukkan struktur dan bahan.',
+                'video-title': 'Model Pembinaan 3D',
+                'video-description': 'Tonton animasi pembinaan 3D Rumah Penghulu Abu Seman yang terperinci dari Badan Warisan Malaysia',
+                'video-error': 'Pelayar anda tidak menyokong tag video.',
+                'model-title': 'Lihat Model 3D',
+                'model-description': 'Terokai butiran rumit tiang tradisional dalam persekitaran 3D interaktif',
+                'model-button': 'Terokai Lebih',
+                'feedback-title': 'Kongsi Maklum Balas Anda',
+                'feedback-description': 'Bantu kami meningkatkan dengan berkongsi pemikiran dan pengalaman anda dengan warisan budaya ini',
+                'feedback-button': 'Beri Maklum Balas',
+                'quiz-title': 'Uji Pengetahuan Anda',
+                'quiz-description': 'Cabari diri anda dengan kuiz interaktif tentang tiang Rumah Penghulu Abu Seman',
+                'quiz-button': 'Ambil Kuiz',
+                'footer-text': 'Memelihara Warisan Budaya dengan',
+                'footer-subtext': 'Inisiatif Pendidikan Seni Bina Tradisional Melayu'
+            },
+            zh: {
+                'header-title': 'Rumah Penghulu Abu Seman',
+                'header-subtitle': '柱子（Tiang Seri）- 传统马来建筑',
+                'section-description': '描述',
+                'description-text': 'Rumah Penghulu Abu Seman 的柱子（<em>tiang seri</em>）展示了精密的传统马来建筑技术。该结构主要使用预制木材元素，无需钉子即可连接。这种细致的建造方法使房屋能够逐块拆卸并移至新位置。这项古老技术使 Rumah Penghulu Abu Seman 能够在 1996 年至 1997 年间从吉打拆除、运输并在吉隆坡重建。',
+                'fact-title': '你知道吗？',
+                'fact-label': '气候设计：',
+                'fact-text': '柱子抬高了房屋结构，有助于提高地板水平，这是传统马来房屋的关键气候设计原则。抬高的地板可以实现地板下的交叉通风，有助于冷却结构和材料。',
+                'video-title': '3D 建筑模型',
+                'video-description': '观看 Badan Warisan Malaysia 提供的 Rumah Penghulu Abu Seman 详细 3D 建筑动画',
+                'video-error': '您的浏览器不支持视频标签。',
+                'model-title': '查看 3D 模型',
+                'model-description': '在交互式 3D 环境中探索传统柱子的精细细节',
+                'model-button': '探索更多',
+                'feedback-title': '分享您的反馈',
+                'feedback-description': '通过分享您对这一文化遗产的想法和经验，帮助我们改进',
+                'feedback-button': '提供反馈',
+                'quiz-title': '测试您的知识',
+                'quiz-description': '通过关于 Rumah Penghulu Abu Seman 柱子的互动测验挑战自己',
+                'quiz-button': '参加测验',
+                'footer-text': '保护文化遗产',
+                'footer-subtext': '传统马来建筑教育倡议'
+            }
+        };
+        
+        // Current language
+        let currentLang = 'en';
+        
+        // Change language function
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update all translated elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+        
+        // Load saved language preference on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                changeLanguage(savedLang);
+            }
+        });
+        
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', reveal);
+        
+        // Initial check on page load
+        reveal();
+        
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
