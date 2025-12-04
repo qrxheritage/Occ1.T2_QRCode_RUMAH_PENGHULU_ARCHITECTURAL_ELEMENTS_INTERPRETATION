@@ -526,6 +526,8 @@
         let currentLang = 'en';
 
         function changeLanguage(lang, clickedButton) {
+            localStorage.setItem("siteLanguage", lang);
+            
             currentLang = lang;
             
             // Update body class for Chinese font
@@ -643,10 +645,9 @@
 
         // Initialize language
         document.addEventListener('DOMContentLoaded', () => {
-            const activeBtn = document.querySelector('.lang-btn.active');
-            if (activeBtn) {
-                changeLanguage('en', activeBtn); 
-            }
+            const savedLang = localStorage.getItem("siteLanguage") || "en";
+            const btn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);
+            changeLanguage(savedLang, btn);
         });
     </script>
 </body>
