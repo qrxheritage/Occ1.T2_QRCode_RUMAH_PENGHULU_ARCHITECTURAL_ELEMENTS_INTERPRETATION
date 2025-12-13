@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumah Tengah - The Middle Room</title>
+    <title>Rumah Ibu - The Main Living Space</title>
     
-    <!-- FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* CSS Variables for better maintenance */
+        :root {
+            --primary-brown: #8B4513; 
+            --dark-brown: #A0522D;
+            --accent-orange: #D2691E;
+            --light-bg: #f5f7fa;
+            --off-white-bg: #e8d5c4;
+            --text-dark: #333;
+            --text-muted: #555;
+            --text-light: #F5F5F5; 
+            --success-green: #4caf50;
+            --error-red: #f44336;
+            --quiz-bg-color: #fffaf0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,12 +31,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8d5c4 100%);
-            padding: 40px 20px;
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--off-white-bg) 100%);
+            padding: 30px 20px; 
             line-height: 1.6;
         }
 
+        
         body.lang-zh {
             font-family: 'KaiTi', '楷体', 'STKaiti', 'BiauKai', serif;
         }
@@ -30,18 +46,53 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             overflow: hidden;
         }
 
+        
         .header {
-            background: white;
-            color: #333;
-            padding: 60px 80px 10px 80px;
+            background: linear-gradient(135deg, #7C401C 0%, var(--accent-orange) 100%); 
+            color: var(--text-light); 
+            padding: 40px 60px 20px 60px; 
             position: relative;
         }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.5em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: var(--text-light); 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
 
+        /* Language Buttons in Dark Header */
         .language-buttons {
             position: absolute;
             top: 20px;
@@ -52,9 +103,9 @@
 
         .lang-btn {
             padding: 8px 16px;
-            background: rgba(139, 69, 19, 0.1);
-            border: 2px solid rgba(139, 69, 19, 0.3);
-            color: #8B4513;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
             border-radius: 25px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -65,29 +116,21 @@
             gap: 6px;
         }
 
-        .lang-btn i {
-            font-size: 0.9rem;
-        }
-
         .lang-btn:hover {
-            background: rgba(139, 69, 19, 0.2);
-            border-color: rgba(139, 69, 19, 0.5);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
 
         .lang-btn.active {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-            color: white;
-            border-color: #8B4513;
+            background: white;
+            color: var(--dark-brown);
+            border-color: white;
         }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-top: 30px;
-        }
-
+        
+        /* Content Sections */
         .content {
-            padding: 20px 80px;
+            padding: 40px 60px 60px; 
         }
 
         .intro-section {
@@ -96,16 +139,17 @@
 
         .intro-section p {
             font-size: 1.05em;
-            color: #555;
+            color: var(--text-muted);
             line-height: 1.8;
             text-align: justify;
         }
 
         .intro-section em {
             font-style: italic;
-            color: #8B4513;
+            color: var(--primary-brown);
         }
 
+        /* Image and Hotspot Styling */
         .image-container {
             position: relative;
             width: 100%;
@@ -125,7 +169,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: #D2691E;
+            background: var(--accent-orange);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -139,32 +183,48 @@
             box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
             animation: pulse 2s infinite;
         }
-
-        .hotspot.question {
-            background: white;
-            color: #333;
-            border-color: #ddd;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        
+        /* Specific Hotspot Positions - Default States */   
+        .hotspot-dapur {
+            top: 40%; 
+            left: 10%; 
+            transform: translate(-50%, -50%);
+        }
+        .hotspot-utensils {
+            bottom: 15%; 
+            left: 50%; 
+            transform: translateX(-50%);
+        }
+        .hotspot-quiz {
+            top: 85%; 
+            left: 10%; 
+            transform: translate(-50%, 0%);
         }
 
+        /* Updated Hover States - Keeps original translate while adding subtle scale */
+        .hotspot-dapur:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .hotspot-utensils:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .hotspot-quiz:hover {
+            transform: translate(-50%, 0%) scale(1.1);
+        }
+
+        /* General hover shadow effect (remove the general transform from here) */
         .hotspot:hover {
-            transform: scale(1.1);
             box-shadow: 0 6px 16px rgba(210, 105, 30, 0.6);
+            z-index: 10;
         }
 
         .hotspot.question:hover {
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
-            }
-            50% {
-                box-shadow: 0 4px 20px rgba(210, 105, 30, 0.7);
-            }
-        }
-
+        /* Hotspot Preview Pop-up styling */
         .hotspot-preview {
             position: absolute;
             background: white;
@@ -178,17 +238,14 @@
             transition: all 0.3s ease;
             z-index: 100;
             pointer-events: none;
+            border-top: 4px solid var(--accent-orange);
         }
 
-        .hotspot-preview.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        /* Positioning the preview closer to the icon */
         .hotspot-preview.top {
-            bottom: 70px;
+            bottom: 60px; 
             left: 50%;
-            transform: translateX(-50%) translateY(10px);
+            transform: translateX(-50%) translateY(5px);
         }
 
         .hotspot-preview.top.show {
@@ -205,51 +262,56 @@
 
         .preview-title {
             font-weight: bold;
-            color: #333;
+            color: var(--text-dark);
             margin-bottom: 5px;
             font-size: 16px;
         }
 
-        .preview-text {
-            color: #666;
-            font-size: 13px;
-            line-height: 1.4;
-        }
+        
+        /* Info Panel (Modal)*/
+.info-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    
+    /* GRADIENT: Blended gradient */
+    background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
+    border-radius: 20px; 
+    border: none;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
+                inset 0 0 40px rgba(139, 69, 19, 0.1);
 
-        .preview-arrow {
-            position: absolute;
-            color: white;
-            font-size: 20px;
-            background: #D2691E;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            right: 10px;
-            top: 10px;
-        }
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
-        .info-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 90%;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+/* Quiz Mode: Warmer, more distinct orange-blend gradient */
+.info-panel.quiz-mode {
+    background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
+    box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
+                inset 0 0 40px rgba(210, 105, 30, 0.1);
+}
 
+/* Subtle separator for titles */
+.info-panel h3 {
+    color: #5D4037;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, transparent, #A0522D, transparent);
+    background-repeat: no-repeat;
+    background-size: 60% 2px;
+    background-position: bottom center;
+    padding-bottom: 15px;
+}
         .info-panel.active {
             opacity: 1;
             visibility: visible;
@@ -257,7 +319,7 @@
         }
 
         .info-panel h3 {
-            color: #8B4513;
+            color: var(--primary-brown);
             margin-bottom: 15px;
             font-size: 24px;
         }
@@ -268,6 +330,7 @@
             margin-bottom: 15px;
         }
 
+        /* List Styling */
         .info-panel ul {
             list-style: none;
             padding: 0;
@@ -284,7 +347,7 @@
 
         .info-panel li:before {
             content: '•';
-            color: #D2691E;
+            color: var(--accent-orange);
             font-weight: bold;
             position: absolute;
             left: 0;
@@ -295,7 +358,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: #D2691E;
+            background: var(--accent-orange);
             color: white;
             border: none;
             width: 30px;
@@ -310,10 +373,11 @@
         }
 
         .close-btn:hover {
-            background: #8B4513;
+            background: var(--primary-brown);
             transform: rotate(90deg);
         }
 
+        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -332,6 +396,21 @@
             visibility: visible;
         }
 
+        /* Quiz/Question Specific Style*/
+        .info-panel.quiz-mode {
+            background: var(--quiz-bg-color); /* Visually separates quiz from info */
+            border-bottom: 5px solid var(--dark-brown);
+        }
+        .info-panel.quiz-mode h3 {
+            color: var(--dark-brown);
+        }
+        .info-panel.quiz-mode .info-content-wrapper {
+            padding: 10px 0 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
         .question-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -341,30 +420,33 @@
 
         .option-btn {
             padding: 15px 20px;
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
+            background: white;
+            border: 2px solid var(--off-white-bg);
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
             transition: all 0.3s ease;
             text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .option-btn:hover {
-            background: #e8e8e8;
-            border-color: #D2691E;
+            background: #fcfcfc;
+            border-color: var(--accent-orange);
         }
 
         .option-btn.correct {
-            background: #4caf50;
+            background: var(--success-green);
             color: white;
-            border-color: #4caf50;
+            border-color: var(--success-green);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
         }
 
         .option-btn.incorrect {
-            background: #f44336;
+            background: var(--error-red);
             color: white;
-            border-color: #f44336;
+            border-color: var(--error-red);
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
         }
 
         .option-btn:disabled {
@@ -376,7 +458,7 @@
             margin-top: 20px;
             padding: 15px;
             background: #e8f5e9;
-            border-left: 4px solid #4caf50;
+            border-left: 4px solid var(--success-green);
             border-radius: 4px;
             display: none;
         }
@@ -389,6 +471,7 @@
             margin: 0;
             color: #2e7d32;
         }
+        /* End Quiz/Question Specific Styles */
 
         @media (max-width: 768px) {
             .header {
@@ -416,6 +499,10 @@
 <body>
     <div class="container">
         <div class="header">
+            <a href="MainPage.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span id="backBtnText">Back to Tour</span>
+            </a>
+
             <div class="language-buttons">
                 <button class="lang-btn active" onclick="changeLanguage('en', this)">
                     <i class="fas fa-globe"></i> English
@@ -427,7 +514,7 @@
                     <i class="fas fa-globe"></i> 中文
                 </button>
             </div>
-            <h1>🏠 <span id="pageTitle">Rumah Tengah — Middle Room</span></h1>
+            <h1> <span id="pageTitle">Rumah Tengah — Middle Room</span></h1>
         </div>
 
         <div class="content">
@@ -440,24 +527,24 @@
             <div class="image-container">
                 <img src="https://i.imgur.com/7fbNofg.jpeg" alt="Rumah Tengah">
                 
-                <div class="hotspot" style="top: 40%; left: 10%; transform: translate(-50%, -50%);" data-hotspot="1">
-                    1
+                <div class="hotspot hotspot-dapur" data-hotspot="1">
+                    <i class="fas fa-fire-burner"></i>
                     <div class="hotspot-preview top">
                         <img src="https://i.imgur.com/odV3sHi.png" alt="Preview" class="preview-thumbnail">
                         <div class="preview-title" id="preview1">Dapur (Kitchen)</div>            
                     </div>
                 </div>
                 
-                <div class="hotspot" style="bottom: 15%; left: 50%; transform: translateX(-50%);" data-hotspot="2">
-                    2
+               <div class="hotspot hotspot-utensils" data-hotspot="2">
+                    <i class="fas fa-utensils"></i>
                     <div class="hotspot-preview top">
                         <img src="https://i.imgur.com/EuXioQu.png" alt="Preview" class="preview-thumbnail">
                         <div class="preview-title" id="preview2">Cooking Utensils</div>
                     </div>
                 </div>
 
-                <div class="hotspot question" style="top: 85%; left: 10%; transform: translate(-50%, 0%);" data-hotspot="question">
-                    ?
+                <div class="hotspot question hotspot-quiz" data-hotspot="question">
+                    <i class="fas fa-brain"></i>
                 </div>
             </div>
         </div>
@@ -468,8 +555,10 @@
     <div class="info-panel" id="infoPanel">
         <button class="close-btn" id="closeBtn">×</button>
         <h3 id="infoTitle"></h3>
+        
         <img id="infoImage" src="" alt="" style="display:none;">
-        <div id="infoContent"></div>
+        <div class="info-content-wrapper" id="infoContent"></div>
+        
         <div class="question-options" id="questionOptions"></div>
         <div class="explanation" id="explanation">
             <p id="explanationText"></p>
@@ -480,6 +569,7 @@
         const content = {
             en: {
                 title: "Rumah Tengah — Middle Room",
+                backBtnText: "Back to Tour",
                 intro: "The Rumah Tengah serves as a domestic area where women traditionally carry out household chores. Its floor is lower than that of the Rumah Ibu, and separate stairways connect the two sections. Carvings and windows in this area are simpler and less ornate, reflecting its domestic function.",
                 hotspot1: {
                     title: "Dapur (Kitchen)",
@@ -495,7 +585,8 @@
                     ]
                 },
                 question: {
-                    title: "What material was used to insulate traditional clay stoves in the dapur?",
+                    title: "Challenge Question",
+                    questionText: "What material was used to insulate traditional clay stoves in the dapur?",
                     options: ["Sand", "Coconut shell", "Clay and banana stalks", "Metal plates"],
                     correctAnswer: 2,
                     explanation: "Traditional stoves were made from elevated wooden boxes packed with clay and banana stalks for insulation."
@@ -503,6 +594,7 @@
             },
             ms: {
                 title: "Rumah Tengah — Ruang Domestik",
+                backBtnText: "Kembali ke Jelajah",
                 intro: "Rumah Tengah berfungsi sebagai ruang domestik di mana wanita secara tradisinya menjalankan kerja-kerja rumah. Lantai di sini lebih rendah daripada Rumah Ibu, dan tangga berasingan menghubungkan kedua-dua bahagian. Ukiran dan tingkap di kawasan ini lebih sederhana dan kurang hiasan, mencerminkan fungsi domestiknya.",
                 hotspot1: {
                     title: "Dapur",
@@ -518,7 +610,8 @@
                     ]
                 },
                 question: {
-                    title: "Apakah bahan yang digunakan untuk menebat dapur tanah liat tradisional?",
+                    title: "Soalan Cabaran",
+                    questionText: "Apakah bahan yang digunakan untuk menebat dapur tanah liat tradisional?",
                     options: ["Pasir", "Tempurung kelapa", "Tanah liat dan pelepah pisang", "Plat logam"],
                     correctAnswer: 2,
                     explanation: "Dapur tradisional diperbuat daripada kotak kayu yang dinaikkan dan diisi dengan tanah liat dan pelepah pisang sebagai penebat."
@@ -526,6 +619,7 @@
             },
             zh: {
                 title: "Rumah Tengah — 中间房",
+                backBtnText: "返回首页",
                 intro: "<i>Rumah Tengah</i> 是一个家庭生活区，传统上由女性进行日常家务。其地板低于 <i>Rumah Ibu</i>，两部分之间有独立的楼梯连接。此区域的雕刻和窗户较为简朴，装饰性不强，体现了其家庭功能。",
                 hotspot1: { 
                     title: "Dapur (厨房)",
@@ -541,7 +635,8 @@
                     ]
                 },
                 question: {
-                    title: "传统厨房的黏土炉灶使用什么材料作为隔热？",
+                    title: "挑战问题",
+                    questionText: "传统厨房的黏土炉灶使用什么材料作为隔热？",
                     options: ["沙子", "椰子壳", "粘土和香蕉杆", "金属板"],
                     correctAnswer: 2,
                     explanation: "传统炉灶由高架木箱制成，填充粘土和香蕉杆作为隔热材料。"
@@ -551,27 +646,45 @@
 
         let currentLang = 'en';
 
+        // Helper function to get language from URL query
+        function getQueryLang() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('lang');
+        }
+
         function changeLanguage(lang, clickedButton) {
             localStorage.setItem("siteLanguage", lang);
-            
             currentLang = lang;
             
             // Update body class for Chinese font
             document.body.className = lang === 'zh' ? 'lang-zh' : '';
             
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            clickedButton.classList.add('active');
+            // Update active button classes
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
+                 const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
+                 if (initialBtn) initialBtn.classList.add('active');
+            }
 
             // Update content
-            document.getElementById('pageTitle').textContent = content[lang].title;
-            document.getElementById('introText').innerHTML = content[lang].intro;
+            const langContent = content[lang];
+            document.getElementById('pageTitle').textContent = langContent.title;
+            document.getElementById('introText').innerHTML = langContent.intro;
+            
+            // Optional: Update back button text if it exists
+            const backBtnTextEl = document.getElementById('backBtnText');
+            if (backBtnTextEl) backBtnTextEl.textContent = langContent.backBtnText;
             
             // Update preview text
-            document.getElementById('preview1').textContent = content[lang].hotspot1.title;
-            document.getElementById('preview2').textContent = content[lang].hotspot2.title;
+            document.getElementById('preview1').textContent = langContent.hotspot1.title;
+            document.getElementById('preview2').textContent = langContent.hotspot2.title;
+
+            // Close panel and reset quiz state if language changes while panel is open
+            if (infoPanel.classList.contains('active')) {
+                closePanel();
+            }
         }
 
         const hotspots = document.querySelectorAll('.hotspot');
@@ -622,16 +735,18 @@
                     infoImage.style.display = 'block';
                     infoContent.innerHTML = '<ul>' + langContent.hotspot2.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
                 } else if (hotspotId === 'question') {
-                    infoTitle.textContent = langContent.question.title;
-                    infoImage.style.display = 'none';
-                    infoContent.innerHTML = '';
+                    const questionData = langContent.question;
+                    infoTitle.textContent = questionData.title;
+                    infoPanel.classList.add('quiz-mode'); // Add quiz class for distinct style
+                    infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
                     questionOptions.style.display = 'grid';
                     
-                    langContent.question.options.forEach((option, index) => {
+                    questionData.options.forEach((option, index) => {
                         const btn = document.createElement('button');
                         btn.className = 'option-btn';
                         btn.textContent = option;
-                        btn.addEventListener('click', () => handleAnswer(index, langContent.question));
+                        // Attach the modified answer handler
+                        btn.addEventListener('click', () => handleAnswer(index, questionData));
                         questionOptions.appendChild(btn);
                     });
                 }
@@ -645,11 +760,16 @@
             const options = questionOptions.querySelectorAll('.option-btn');
             
             options.forEach((btn, index) => {
-                btn.disabled = true;
+                btn.disabled = true; // Disable all options after first click
                 
                 if (index === questionData.correctAnswer) {
                     btn.classList.add('correct');
+                    // If the user selected the correct one, make it visually obvious
+                    if (index === selectedIndex) {
+                        btn.style.boxShadow = '0 0 15px var(--success-green)'; 
+                    }
                 } else if (index === selectedIndex) {
+                    // If selected option is wrong
                     btn.classList.add('incorrect');
                 }
             });
@@ -660,6 +780,7 @@
 
         function closePanel() {
             infoPanel.classList.remove('active');
+            infoPanel.classList.remove('quiz-mode');
             overlay.classList.remove('active');
         }
 
@@ -674,9 +795,12 @@
 
         // Initialize language
         document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem("siteLanguage") || "en";
-            const btn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);
-            changeLanguage(savedLang, btn);
+            const urlLang = getQueryLang();
+            const savedLang = localStorage.getItem("siteLanguage");
+            const initialLang = urlLang || savedLang || "en";
+            
+            const btn = document.querySelector(`.lang-btn[onclick*="${initialLang}"]`);
+            changeLanguage(initialLang, btn);
         });
     </script>
 </body>
