@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rumah Ibu - The Main Living Space</title>
     
-    <!-- FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* CSS Variables for better maintenance */
+        :root {
+            --primary-brown: #8B4513; 
+            --dark-brown: #A0522D;
+            --accent-orange: #D2691E;
+            --light-bg: #f5f7fa;
+            --off-white-bg: #e8d5c4;
+            --text-dark: #333;
+            --text-muted: #555;
+            --text-light: #F5F5F5; 
+            --success-green: #4caf50;
+            --error-red: #f44336;
+            --quiz-bg-color: #fffaf0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,12 +31,13 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-             background: linear-gradient(135deg, #f5f7fa 0%, #e8d5c4 100%);
-            padding: 40px 20px;
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--off-white-bg) 100%);
+            padding: 30px 20px; 
             line-height: 1.6;
         }
 
+        
         body.lang-zh {
             font-family: 'KaiTi', '楷体', 'STKaiti', 'BiauKai', serif;
         }
@@ -30,18 +46,53 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             overflow: hidden;
         }
 
+        
         .header {
-            background: white;
-            color: #333;
-            padding: 60px 80px 10px 80px;
+            background: linear-gradient(135deg, #7C401C 0%, var(--accent-orange) 100%); 
+            color: var(--text-light); 
+            padding: 40px 60px 20px 60px; 
             position: relative;
         }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.5em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: var(--text-light); 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
 
+        /* Language Buttons in Dark Header */
         .language-buttons {
             position: absolute;
             top: 20px;
@@ -52,9 +103,9 @@
 
         .lang-btn {
             padding: 8px 16px;
-            background: rgba(139, 69, 19, 0.1);
-            border: 2px solid rgba(139, 69, 19, 0.3);
-            color: #8B4513;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
             border-radius: 25px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -65,29 +116,21 @@
             gap: 6px;
         }
 
-        .lang-btn i {
-            font-size: 0.9rem;
-        }
-
         .lang-btn:hover {
-            background: rgba(139, 69, 19, 0.2);
-            border-color: rgba(139, 69, 19, 0.5);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
 
         .lang-btn.active {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-            color: white;
-            border-color: #8B4513;
+            background: white;
+            color: var(--dark-brown);
+            border-color: white;
         }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-top: 30px;
-        }
-
+        
+        /* Content Sections */
         .content {
-            padding: 20px 80px;
+            padding: 40px 60px 60px; 
         }
 
         .intro-section {
@@ -96,16 +139,17 @@
 
         .intro-section p {
             font-size: 1.05em;
-            color: #555;
+            color: var(--text-muted);
             line-height: 1.8;
             text-align: justify;
         }
 
         .intro-section em {
             font-style: italic;
-            color: #8B4513;
+            color: var(--primary-brown);
         }
 
+        /* Image and Hotspot Styling */
         .image-container {
             position: relative;
             width: 100%;
@@ -125,7 +169,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: #D2691E;
+            background: var(--accent-orange);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -139,32 +183,48 @@
             box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
             animation: pulse 2s infinite;
         }
-
-        .hotspot.question {
-            background: white;
-            color: #333;
-            border-color: #ddd;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        
+        /* Specific Hotspot Positions - Default States */   
+        .hotspot-pelamin {
+            top: 40%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+        }
+        .hotspot-rumah-ibu {
+            bottom: 15%; 
+            left: 50%; 
+            transform: translateX(-50%);
+        }
+        .hotspot-quiz {
+            top: 85%; 
+            left: 10%; 
+            transform: translate(-50%, 0%);
         }
 
+        /* Updated Hover States - Keeps original translate while adding subtle scale */
+        .hotspot-pelamin:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .hotspot-rumah-ibu:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .hotspot-quiz:hover {
+            transform: translate(-50%, 0%) scale(1.1);
+        }
+
+        /* General hover shadow effect (remove the general transform from here) */
         .hotspot:hover {
-            transform: scale(1.1);
             box-shadow: 0 6px 16px rgba(210, 105, 30, 0.6);
+            z-index: 10;
         }
 
         .hotspot.question:hover {
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 4px 12px rgba(210, 105, 30, 0.4);
-            }
-            50% {
-                box-shadow: 0 4px 20px rgba(210, 105, 30, 0.7);
-            }
-        }
-
+        /* Hotspot Preview Pop-up styling */
         .hotspot-preview {
             position: absolute;
             background: white;
@@ -178,17 +238,14 @@
             transition: all 0.3s ease;
             z-index: 100;
             pointer-events: none;
+            border-top: 4px solid var(--accent-orange);
         }
 
-        .hotspot-preview.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        /* Positioning the preview closer to the icon */
         .hotspot-preview.top {
-            bottom: 70px;
+            bottom: 60px; 
             left: 50%;
-            transform: translateX(-50%) translateY(10px);
+            transform: translateX(-50%) translateY(5px);
         }
 
         .hotspot-preview.top.show {
@@ -205,50 +262,58 @@
 
         .preview-title {
             font-weight: bold;
-            color: #333;
+            color: var(--text-dark);
             margin-bottom: 5px;
             font-size: 16px;
         }
 
-        .preview-text {
-            color: #666;
-            font-size: 13px;
-            line-height: 1.4;
-        }
+        
+        /* Info Panel (Modal)*/
+.info-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    
+    /* GRADIENT: Blended gradient */
+    background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
+    border-radius: 20px; 
+    border: none;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
+                inset 0 0 40px rgba(139, 69, 19, 0.1);
 
-        .preview-arrow {
-            position: absolute;
-            color: white;
-            font-size: 20px;
-            background: #D2691E;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            right: 10px;
-            top: 10px;
-        }
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
-        .info-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 90%;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+/* Quiz Mode: Warmer, more distinct orange-blend gradient */
+.info-panel.quiz-mode {
+    background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
+    box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
+                inset 0 0 40px rgba(210, 105, 30, 0.1);
+}
+
+/* Subtle separator for titles */
+.info-panel h3 {
+    color: #5D4037;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, transparent, #A0522D, transparent);
+    background-repeat: no-repeat;
+    background-size: 60% 2px;
+    background-position: bottom center;
+    padding-bottom: 15px;
+}
+      
+
 
         .info-panel.active {
             opacity: 1;
@@ -257,7 +322,7 @@
         }
 
         .info-panel h3 {
-            color: #8B4513;
+            color: var(--primary-brown);
             margin-bottom: 15px;
             font-size: 24px;
         }
@@ -268,6 +333,7 @@
             margin-bottom: 15px;
         }
 
+        /* List Styling */
         .info-panel ul {
             list-style: none;
             padding: 0;
@@ -284,7 +350,7 @@
 
         .info-panel li:before {
             content: '•';
-            color: #D2691E;
+            color: var(--accent-orange);
             font-weight: bold;
             position: absolute;
             left: 0;
@@ -295,7 +361,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: #D2691E;
+            background: var(--accent-orange);
             color: white;
             border: none;
             width: 30px;
@@ -310,10 +376,11 @@
         }
 
         .close-btn:hover {
-            background: #8B4513;
+            background: var(--primary-brown);
             transform: rotate(90deg);
         }
 
+        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -332,6 +399,21 @@
             visibility: visible;
         }
 
+        /* Quiz/Question Specific Style*/
+        .info-panel.quiz-mode {
+            background: var(--quiz-bg-color); /* Visually separates quiz from info */
+            border-bottom: 5px solid var(--dark-brown);
+        }
+        .info-panel.quiz-mode h3 {
+            color: var(--dark-brown);
+        }
+        .info-panel.quiz-mode .info-content-wrapper {
+            padding: 10px 0 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
         .question-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -341,30 +423,33 @@
 
         .option-btn {
             padding: 15px 20px;
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
+            background: white;
+            border: 2px solid var(--off-white-bg);
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
             transition: all 0.3s ease;
             text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .option-btn:hover {
-            background: #e8e8e8;
-            border-color: #D2691E;
+            background: #fcfcfc;
+            border-color: var(--accent-orange);
         }
 
         .option-btn.correct {
-            background: #4caf50;
+            background: var(--success-green);
             color: white;
-            border-color: #4caf50;
+            border-color: var(--success-green);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
         }
 
         .option-btn.incorrect {
-            background: #f44336;
+            background: var(--error-red);
             color: white;
-            border-color: #f44336;
+            border-color: var(--error-red);
+            box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
         }
 
         .option-btn:disabled {
@@ -376,7 +461,7 @@
             margin-top: 20px;
             padding: 15px;
             background: #e8f5e9;
-            border-left: 4px solid #4caf50;
+            border-left: 4px solid var(--success-green);
             border-radius: 4px;
             display: none;
         }
@@ -389,26 +474,46 @@
             margin: 0;
             color: #2e7d32;
         }
+        /* End Quiz/Question Specific Styles */
 
-        @media (max-width: 768px) {
-            .header {
-                padding: 60px 40px;
+
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .header, .content {
+                padding-left: 40px;
+                padding-right: 40px;
             }
-
+            .header {
+                padding-top: 40px;
+                padding-bottom: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            body { padding: 20px 10px; }
+            .header {
+                /* Reduced padding for small screens */
+                padding: 40px 15px 15px 15px;
+            }
             .header h1 {
                 font-size: 1.8em;
             }
-
             .content {
-                padding: 30px 20px;
+                padding: 20px;
             }
-
             .language-buttons {
                 position: relative;
                 top: auto;
                 right: auto;
                 justify-content: center;
+                margin-top: 15px;
                 margin-bottom: 20px;
+            }
+            .back-btn {
+                top: 10px;
+                left: 10px;
+            }
+            .question-options {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -416,6 +521,10 @@
 <body>
     <div class="container">
         <div class="header">
+            <a href="MainPage.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span id="backBtnText">Back to Tour</span>
+            </a>
+            
             <div class="language-buttons">
                 <button class="lang-btn active" onclick="changeLanguage('en', this)">
                     <i class="fas fa-globe"></i> English
@@ -427,7 +536,7 @@
                     <i class="fas fa-globe"></i> 中文
                 </button>
             </div>
-            <h1>🏠 <span id="pageTitle">Rumah Ibu — The Main Living Space of House</span></h1>
+            <h1> <span id="pageTitle">Rumah Ibu — The Main Living Space of House</span></h1>
         </div>
 
         <div class="content">
@@ -440,24 +549,24 @@
             <div class="image-container">
                 <img src="https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024" alt="Rumah Ibu">
                 
-                <div class="hotspot" style="top: 40%; left: 50%; transform: translate(-50%, -50%);" data-hotspot="1">
-                    2
+                <div class="hotspot hotspot-pelamin" data-hotspot="1">
+                    <i class="fas fa-chair"></i>
                     <div class="hotspot-preview top">
                         <img src="https://i.imgur.com/WTu5haI.png" alt="Preview" class="preview-thumbnail">
                         <div class="preview-title" id="preview1">Pelamin (Wedding Dais)</div>            
                     </div>
                 </div>
                 
-                <div class="hotspot" style="bottom: 15%; left: 50%; transform: translateX(-50%);" data-hotspot="2">
-                    1
+                <div class="hotspot hotspot-rumah-ibu" data-hotspot="2">
+                    <i class="fas fa-info-circle"></i>
                     <div class="hotspot-preview top">
                         <img src="https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024" alt="Preview" class="preview-thumbnail">
                         <div class="preview-title" id="preview2">Rumah Ibu</div>
                     </div>
                 </div>
 
-                <div class="hotspot question" style="top: 85%; left: 10%; transform: translate(-50%, 0%);" data-hotspot="question">
-                    ?
+                <div class="hotspot question hotspot-quiz" data-hotspot="question">
+                    <i class="fas fa-brain"></i>
                 </div>
             </div>
         </div>
@@ -468,8 +577,10 @@
     <div class="info-panel" id="infoPanel">
         <button class="close-btn" id="closeBtn">×</button>
         <h3 id="infoTitle"></h3>
+        
         <img id="infoImage" src="" alt="" style="display:none;">
-        <div id="infoContent"></div>
+        <div class="info-content-wrapper" id="infoContent"></div>
+        
         <div class="question-options" id="questionOptions"></div>
         <div class="explanation" id="explanation">
             <p id="explanationText"></p>
@@ -480,6 +591,7 @@
         const content = {
             en: {
                 title: "Rumah Ibu — The Main Living Space of House",
+                backBtnText: "Back to Tour",
                 intro: "Rumah Ibu is built at the highest floor level and serves as the central area for receiving guests and holding important family events. Traditionally, wedding ceremonies take place here. A decorative wedding dais known as pelamin is prepared with detailed needlework by the bride's relatives for the bride and groom to be seated during the bersanding ceremony. This highlights the Rumah Ibu as a space of social gathering, celebration, and family unity.",
                 hotspot1: {
                     title: "Pelamin (Wedding Dais)",
@@ -496,14 +608,16 @@
                     ]
                 },
                 question: {
-                    title: "Who are in charge of making pelamin?",
-                    options: ["Groom", "Bride", "Groom's families", "Bride's relatives"],
-                    correctAnswer: 3,
+                    title: "Challenge Question",
+                    questionText: "Who are in charge of making pelamin? (Wedding Dais)?",
+                    options: ["The Groom", "The Bride", "The Groom's parents", "The Bride's relatives"],
+                    correctAnswer: 3, // Index 3: "The Bride's relatives"
                     explanation: "The pelamin is traditionally crafted with detailed needlework by the bride's relatives. This important cultural tradition requires several weeks of preparation."
                 }
             },
             ms: {
                 title: "Rumah Ibu — Ruang Tamu Utama",
+                backBtnText: "Kembali ke Jelajah",
                 intro: "Rumah Ibu dibina pada aras lantai yang paling tinggi dan berfungsi sebagai ruang utama untuk menerima tetamu serta mengadakan majlis keluarga yang penting. Secara tradisinya, majlis perkahwinan berlangsung di sini. Sebuah pelamin yang dihias indah akan disiapkan dengan hasil kerja tangan yang teliti oleh ahli keluarga pengantin perempuan untuk tempat duduk pengantin lelaki dan perempuan semasa majlis bersanding. Ini menggambarkan Rumah Ibu sebagai ruang untuk perhimpunan sosial, perayaan dan penyatuan keluarga.",
                 hotspot1: {
                     title: "Pelamin",
@@ -520,14 +634,16 @@
                     ]
                 },
                 question: {
-                    title: "Siapakah yang bertanggungjawab membuat pelamin?",
-                    options: ["Pengantin lelaki", "Pengantin perempuan", "Keluarga pengantin lelaki", "Ahli keluarga pengantin perempuann"],
+                    title: "Soalan Cabaran",
+                    questionText: "Siapakah yang bertanggungjawab membuat pelamin?",
+                    options: ["Pengantin lelaki", "Pengantin perempuan", "Ibu bapa pengantin lelaki", "Ahli keluarga pengantin perempuann"],
                     correctAnswer: 3,
                     explanation: "Pelamin secara tradisinya direka dengan jahitan terperinci oleh ahli keluarga pengantin perempuan. Tradisi budaya penting ini memerlukan beberapa minggu persediaan."
                 }
             },
             zh: {
                 title: "Rumah Ibu — 客厅",
+                backBtnText: "返回首页",
                 intro: "<i>Rumah Ibu</i> 建在整个房屋中最高的楼层，作为接待宾客和举办重要家庭活动的主要空间。传统上，婚礼仪式也在这里举行。由新娘的亲属精心制作、绣工细致的新人座<em>（pelamin）</em>会被布置好，让新人在婚礼的并坐礼<em>（bersanding）</em>仪式中入座接受祝福。这体现了 <i>Rumah Ibu</i> 作为社交、庆典与家庭凝聚的核心空间。",
                 hotspot1: { 
                     title: "Pelamin（新人座）",
@@ -544,8 +660,9 @@
                     ]
                 },
                 question: {
-                    title: "谁负责制作新人座<（pelamin）？",
-                    options: ["新郎", "新娘", "新郎的家人", "新娘的亲属"],
+                    title: "挑战问题",
+                    questionText: "谁负责制作新人座（pelamin）？",
+                    options: ["新郎", "新娘", "新郎的父母", "新娘的亲属"],
                     correctAnswer: 3,
                     explanation: "新人座(Pelamin)传统上由新娘的亲戚精心刺绣制作。这一重要的文化传统需要数周的准备时间。"
                 }
@@ -554,27 +671,45 @@
 
         let currentLang = 'en';
 
+        // Helper function to get language from URL query
+        function getQueryLang() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('lang');
+        }
+
         function changeLanguage(lang, clickedButton) {
             localStorage.setItem("siteLanguage", lang);
-
             currentLang = lang;
             
             // Update body class for Chinese font
             document.body.className = lang === 'zh' ? 'lang-zh' : '';
             
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            clickedButton.classList.add('active');
+            // Update active button classes
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
+                 const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
+                 if (initialBtn) initialBtn.classList.add('active');
+            }
 
             // Update content
-            document.getElementById('pageTitle').textContent = content[lang].title;
-            document.getElementById('introText').innerHTML = content[lang].intro;
+            const langContent = content[lang];
+            document.getElementById('pageTitle').textContent = langContent.title;
+            document.getElementById('introText').innerHTML = langContent.intro;
+            
+            // Optional: Update back button text if it exists
+            const backBtnTextEl = document.getElementById('backBtnText');
+            if (backBtnTextEl) backBtnTextEl.textContent = langContent.backBtnText;
             
             // Update preview text
-            document.getElementById('preview1').textContent = content[lang].hotspot1.title;
-            document.getElementById('preview2').textContent = content[lang].hotspot2.title;
+            document.getElementById('preview1').textContent = langContent.hotspot1.title;
+            document.getElementById('preview2').textContent = langContent.hotspot2.title;
+
+            // Close panel and reset quiz state if language changes while panel is open
+            if (infoPanel.classList.contains('active')) {
+                closePanel();
+            }
         }
 
         const hotspots = document.querySelectorAll('.hotspot');
@@ -590,51 +725,44 @@
 
         hotspots.forEach(hotspot => {
             const preview = hotspot.querySelector('.hotspot-preview');
+            const hotspotId = hotspot.getAttribute('data-hotspot');
             
-            hotspot.addEventListener('mouseenter', () => {
-                if (preview) {
-                    preview.classList.add('show');
-                }
-            });
+            // Hover logic (unchanged)
+            hotspot.addEventListener('mouseenter', () => { if (preview) preview.classList.add('show'); });
+            hotspot.addEventListener('mouseleave', () => { if (preview) preview.classList.remove('show'); });
             
-            hotspot.addEventListener('mouseleave', () => {
-                if (preview) {
-                    preview.classList.remove('show');
-                }
-            });
-            
+            // Click logic
             hotspot.addEventListener('click', () => {
-                const hotspotId = hotspot.getAttribute('data-hotspot');
                 const langContent = content[currentLang];
                 
-                // Reset panel content
+                // Reset panel state
                 questionOptions.innerHTML = '';
                 explanation.classList.remove('show');
                 questionOptions.style.display = 'none';
                 infoImage.style.display = 'none';
                 infoContent.innerHTML = '';
+                infoPanel.classList.remove('quiz-mode'); // Remove quiz class by default
                 
-                if (hotspotId === '1') {
-                    infoTitle.textContent = langContent.hotspot1.title;
-                    infoImage.src = 'https://i.imgur.com/WTu5haI.png';
+                if (hotspotId === '1' || hotspotId === '2') {
+                    const data = langContent['hotspot' + hotspotId];
+                    infoTitle.textContent = data.title;
+                    infoImage.src = (hotspotId === '1') ? 'https://i.imgur.com/WTu5haI.png' : 'https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024';
                     infoImage.style.display = 'block';
-                    infoContent.innerHTML = '<ul>' + langContent.hotspot1.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
-                } else if (hotspotId === '2') {
-                    infoTitle.textContent = langContent.hotspot2.title;
-                    infoImage.src = 'https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024';
-                    infoImage.style.display = 'block';
-                    infoContent.innerHTML = '<ul>' + langContent.hotspot2.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+                    infoContent.innerHTML = '<ul>' + data.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+
                 } else if (hotspotId === 'question') {
-                    infoTitle.textContent = langContent.question.title;
-                    infoImage.style.display = 'none';
-                    infoContent.innerHTML = '';
+                    const questionData = langContent.question;
+                    infoTitle.textContent = questionData.title;
+                    infoPanel.classList.add('quiz-mode'); // Add quiz class for distinct style
+                    infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
                     questionOptions.style.display = 'grid';
                     
-                    langContent.question.options.forEach((option, index) => {
+                    questionData.options.forEach((option, index) => {
                         const btn = document.createElement('button');
                         btn.className = 'option-btn';
                         btn.textContent = option;
-                        btn.addEventListener('click', () => handleAnswer(index, langContent.question));
+                        // Attach the modified answer handler
+                        btn.addEventListener('click', () => handleAnswer(index, questionData));
                         questionOptions.appendChild(btn);
                     });
                 }
@@ -644,15 +772,21 @@
             });
         });
 
+        // Restored and slightly improved handleAnswer function
         function handleAnswer(selectedIndex, questionData) {
             const options = questionOptions.querySelectorAll('.option-btn');
             
             options.forEach((btn, index) => {
-                btn.disabled = true;
+                btn.disabled = true; // Disable all options after first click
                 
                 if (index === questionData.correctAnswer) {
                     btn.classList.add('correct');
+                    // If the user selected the correct one, make it visually obvious
+                    if (index === selectedIndex) {
+                        btn.style.boxShadow = '0 0 15px var(--success-green)'; 
+                    }
                 } else if (index === selectedIndex) {
+                    // If selected option is wrong
                     btn.classList.add('incorrect');
                 }
             });
@@ -663,6 +797,7 @@
 
         function closePanel() {
             infoPanel.classList.remove('active');
+            infoPanel.classList.remove('quiz-mode');
             overlay.classList.remove('active');
         }
 
@@ -677,9 +812,12 @@
 
         // Initialize language
         document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem("siteLanguage") || "en";
-            const btn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);
-            changeLanguage(savedLang, btn);
+            const urlLang = getQueryLang();
+            const savedLang = localStorage.getItem("siteLanguage");
+            const initialLang = urlLang || savedLang || "en";
+            
+            const btn = document.querySelector(`.lang-btn[onclick*="${initialLang}"]`);
+            changeLanguage(initialLang, btn);
         });
     </script>
 </body>
