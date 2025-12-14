@@ -529,43 +529,6 @@
             
             .action-card h3 { white-space: normal; }
         }
-
-        /* Admin Export Cards */
-        .action-card.export {
-            background: white;
-            border: 2px solid var(--light-orange-bg);
-            border-radius: 12px;
-            padding: 35px 25px;
-            transition: all 0.3s ease;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            text-decoration: none;
-            color: var(--text-dark);
-        }
-
-        .action-card.export:hover {
-            border-color: var(--primary-orange);
-            box-shadow: 0 8px 25px rgba(210, 105, 30, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .action-card.export h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3em;
-            color: var(--text-dark);
-            margin: 10px 0 8px 0;
-        }
-
-        .action-card.export p {
-            color: var(--text-muted);
-            font-size: 0.92em;
-            margin: 0;
-            line-height: 1.5;
-        }
     </style>
 </head>
 
@@ -667,25 +630,6 @@
                 <button class="btn-action" id="feedbackBtn">Give Feedback</button>
             </div>
         </div>
-        
-          <!-- 在 action-container 后面，credit 前面 -->
-        <div style="display: flex; gap: 40px; justify-content: flex-start; max-width: 900px; margin: -30px auto 40px;">        
-            <button 
-                id="export-submissions-btn" 
-                class="hidden" 
-                onclick="exportSubmissions()"
-                style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dark); text-decoration: none; font-size: 1.05rem; font-weight: 600; background: none; border: none; cursor: pointer;">
-                <i class="fas fa-download"></i> Export Submissions Data
-            </button>
-            
-            <button 
-                id="export-stats-btn" 
-                class="hidden" 
-                onclick="exportStats()"
-                style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-dark); text-decoration: none; font-size: 1.05rem; font-weight: 600; background: none; border: none; cursor: pointer;">
-                <i class="fas fa-download"></i> Export Quiz Stats
-            </button>       
-        </div>
 
         <div class="credit" id="creditText">
             Courtesy of Badan Warisan Malaysia.
@@ -707,9 +651,6 @@
     </div>
 
 <script>
-    // ===== ADMIN TOKEN =====
-    const ADMIN_TOKEN = 'heritage2024';
-
     const content = {
         en: {
             mainTitle: "Discover the Legacy of Rumah Penghulu Abu Seman",
@@ -734,12 +675,6 @@
             credit: "Courtesy of Badan Warisan Malaysia.",
             infoTitle: '<i class="fas fa-question-circle"></i> Do you know?',
             infoText: "The <strong>low arch at the entrance</strong> requires visitors to bow slightly—a gesture reflecting traditional values of <strong>humility and respect</strong>.",
-            adminSectionTitle: "Admin Tools",
-            adminSectionIntro: "Export quiz data for analysis (admin access only)",
-            exportSubmissionsTitle: "Export Submissions",
-            exportSubmissionsDesc: "Download all quiz responses as CSV",
-            exportStatsTitle: "Export Statistics",
-            exportStatsDesc: "Download quiz performance stats as CSV"
         },
         ms: {
             mainTitle: "Warisan Rumah Penghulu Abu Seman",
@@ -764,13 +699,7 @@
             credit: "Ihsan Badan Warisan Malaysia.",
             infoTitle: '<i class="fas fa-question-circle"></i> Tahukah anda?',
             infoText: "<strong>Gerbang rendah di pintu masuk</strong> memerlukan pengunjung menundukkan kepala—isyarat yang mencerminkan nilai <strong>kerendahan hati dan hormat</strong>.",
-            adminSectionTitle: "Alat Pentadbir",
-            adminSectionIntro: "Eksport data kuiz untuk analisis (akses pentadbir sahaja)",
-            exportSubmissionsTitle: "Eksport Penyerahan",
-            exportSubmissionsDesc: "Muat turun semua respons kuiz sebagai CSV",
-            exportStatsTitle: "Eksport Statistik",
-            exportStatsDesc: "Muat turun statistik prestasi kuiz sebagai CSV"
-        },
+            },
         zh: {
             mainTitle: "探索 Rumah Penghulu Abu Seman 的遗产",
             exploreBtn: "开始探索",
@@ -794,17 +723,11 @@
             credit: "由马来西亚文化遗产机构提供。",
             infoTitle: '<i class="fas fa-question-circle"></i> 您知道吗？',
             infoText: "<strong>入口处的低矮拱门</strong>要求访客稍微低头—这一姿态反映了传统的<strong>谦逊和尊重</strong>价值观。",
-            adminSectionTitle: "管理工具",
-            adminSectionIntro: "导出测验数据进行分析（仅限管理员访问）",
-            exportSubmissionsTitle: "导出提交",
-            exportSubmissionsDesc: "下载所有测验回复为CSV",
-            exportStatsTitle: "导出统计",
-            exportStatsDesc: "下载测验表现统计为CSV"
-        }
+            }
     };
 
     let currentLang = 'en';
-
+    
     function changeLanguage(lang, clickedButton) {
         localStorage.setItem("siteLanguage", lang);
         
@@ -838,12 +761,6 @@
             'creditText': langContent.credit,
             'infoTitle': langContent.infoTitle,
             'infoText': langContent.infoText,
-            'adminSectionTitle': langContent.adminSectionTitle,
-            'adminSectionIntro': langContent.adminSectionIntro,
-            'exportSubmissionsTitle': langContent.exportSubmissionsTitle,
-            'exportSubmissionsDesc': langContent.exportSubmissionsDesc,
-            'exportStatsTitle': langContent.exportStatsTitle,
-            'exportStatsDesc': langContent.exportStatsDesc
         };
 
         for (let [id, text] of Object.entries(elements)) {
@@ -855,7 +772,7 @@
             span.textContent = langContent.viewDetails;
         });
     }
-
+    
     function revealContent() {
         const contentContainer = document.getElementById('main-content-container');
         
@@ -870,7 +787,7 @@
     }
 
     function openQuiz() {
-        window.location.href = 'quiz.html?lang=' + currentLang + '&source=MainPage.html';
+        window.location.href = 'quiz.html?lang=' + currentLang + '&source=UserPage.html';
     }
 
     function openFeedback() {
@@ -891,113 +808,6 @@
         }
     });
 
-    // ===== ADMIN : Check Access =====
-    function checkAdminAccess() {
-        //show in logging for localhost
-        if (window.location.hostname === 'localhost' || 
-            window.location.hostname === '127.0.0.1') {
-            showExportButtons();
-            return;
-        } 
-        const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-        if (isAdmin) showExportButtons();
-    }
-
-    function showExportButtons() {
-        const btn1 = document.getElementById('export-submissions-btn');
-        const btn2 = document.getElementById('export-stats-btn');
-        if (btn1) btn1.classList.remove('hidden');
-        if (btn2) btn2.classList.remove('hidden');
-    }
-
-    // ===== ADMIN : Exports Submissions =====
-    async function exportSubmissions() {
-        try {
-            const response = await fetch('/api/admin/export-submissions', {
-                method: 'POST',
-                headers: {
-                    'X-ADMIN-TOKEN': ADMIN_TOKEN,
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (response.status === 403) {
-                alert('Admin access denied. Invalid token.');
-                return;
-            }
-            
-            if (!response.ok) {
-                throw new Error('Export failed');
-            }
-            
-            // Downloads CSV
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'quiz_submissions.csv';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            console.log('✅ Submissions exported successfully');
-        } catch (err) {
-            console.error('❌ Export failed:', err);
-            alert('Failed to export submissions. Check console for details.');
-        }
-    }
-
-    // ===== ADMIN : Exports Stats =====
-    async function exportStats() {
-        try {
-            const response = await fetch('/api/admin/export-stats', {
-                method: 'POST',
-                headers: {
-                    'X-ADMIN-TOKEN': ADMIN_TOKEN,
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (response.status === 403) {
-                alert('Admin access denied. Invalid token.');
-                return;
-            }
-            
-            if (!response.ok) {
-                throw new Error('Export failed');
-            }
-            
-            // Downloads CSV
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'quiz_stats.csv';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            console.log('✅ Stats exported successfully');
-        } catch (err) {
-            console.error('❌ Export failed:', err);
-            alert('Failed to export stats. Check console for details.');
-        }
-    }
-
-    // ===== ADMIN : Security =====
-    function enableAdmin() {
-        const pw = prompt('Enter admin password:');
-        if (pw === ADMIN_TOKEN) {
-            sessionStorage.setItem('isAdmin', 'true');
-            showExportButtons();
-            alert('✅ Admin access granted!');
-        } else {
-            alert('❌ Invalid password');
-        }
-    }
-
     window.onload = function () {
         const savedLang = localStorage.getItem("siteLanguage") || "en";
         const btn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);
@@ -1005,14 +815,8 @@
             changeLanguage(savedLang, btn);
         }
         
-        console.log("✅ MainPage loaded");
+        console.log("✅ UserPage loaded");
         };
-
-    // ===== DOMContentLoaded：Check Admin Access =====
-    document.addEventListener('DOMContentLoaded', function() {
-        checkAdminAccess();
-        console.log("✅ Admin access check completed");
-    });
 </script>
 </body>
 </html>

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CSS Variables for better maintenance */
         :root {
             --primary-brown: #8B4513; 
             --dark-brown: #A0522D;
@@ -261,49 +260,49 @@
 
         
         /* Info Panel (Modal)*/
-.info-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    
-    /* GRADIENT: Blended gradient */
-    background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
-    border-radius: 20px; 
-    border: none;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
-                inset 0 0 40px rgba(139, 69, 19, 0.1);
+        .info-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            
+            /* GRADIENT: Blended gradient */
+            background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
+            border-radius: 20px; 
+            border: none;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
+                        inset 0 0 40px rgba(139, 69, 19, 0.1);
 
-    padding: 40px;
-    max-width: 600px;
-    width: 90%;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1000;
-    max-height: 80vh;
-    overflow-y: auto;
-}
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
 
-/* Quiz Mode: Warmer, more distinct orange-blend gradient */
-.info-panel.quiz-mode {
-    background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
-    box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
-                inset 0 0 40px rgba(210, 105, 30, 0.1);
-}
+        /* Quiz Mode: Warmer, more distinct orange-blend gradient */
+        .info-panel.quiz-mode {
+            background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
+            box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
+                        inset 0 0 40px rgba(210, 105, 30, 0.1);
+        }
 
-/* Subtle separator for titles */
-.info-panel h3 {
-    color: #5D4037;
-    font-family: 'Playfair Display', serif;
-    text-align: center;
-    margin-bottom: 20px;
-    background: linear-gradient(to right, transparent, #A0522D, transparent);
-    background-repeat: no-repeat;
-    background-size: 60% 2px;
-    background-position: bottom center;
-    padding-bottom: 15px;
-}
+        /* Subtle separator for titles */
+        .info-panel h3 {
+            color: #5D4037;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, transparent, #A0522D, transparent);
+            background-repeat: no-repeat;
+            background-size: 60% 2px;
+            background-position: bottom center;
+            padding-bottom: 15px;
+        }
       
 
 
@@ -466,9 +465,8 @@
             margin: 0;
             color: #2e7d32;
         }
+
         /* End Quiz/Question Specific Styles */
-
-
         @media (max-width: 768px) {
             .header {
                 padding: 60px 40px;
@@ -492,6 +490,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
