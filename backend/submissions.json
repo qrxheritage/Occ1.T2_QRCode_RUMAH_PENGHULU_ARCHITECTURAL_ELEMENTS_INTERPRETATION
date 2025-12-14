@@ -1,0 +1,80 @@
+[
+  {
+    "submissionIndex": 0,
+    "timestamp": "2025-12-14T05:42:15.933Z",
+    "visitorID": "jaelyn",
+    "score": 6,
+    "percentage": 100,
+    "question1": "B",
+    "question2": "B",
+    "question3": "B",
+    "question4": "C",
+    "question5": "B",
+    "question6": "B"
+  },
+  {
+    "submissionIndex": 1,
+    "timestamp": "2025-12-14T06:02:26.795Z",
+    "visitorID": "jaelyn",
+    "score": 6,
+    "percentage": 100,
+    "question1": "B",
+    "question2": "B",
+    "question3": "B",
+    "question4": "C",
+    "question5": "B",
+    "question6": "B"
+  },
+  {
+    "submissionIndex": 2,
+    "timestamp": "2025-12-14T06:09:26.008Z",
+    "visitorID": "cl",
+    "score": 3,
+    "percentage": 50,
+    "question1": "B",
+    "question2": "B",
+    "question3": "C",
+    "question4": "B",
+    "question5": "B",
+    "question6": "D"
+  },
+  {
+    "submissionIndex": 3,
+    "timestamp": "2025-12-14T06:24:32.820Z",
+    "visitorID": "mm",
+    "score": 6,
+    "percentage": 100,
+    "question1": "B",
+    "question2": "B",
+    "question3": "B",
+    "question4": "C",
+    "question5": "B",
+    "question6": "B"
+  },
+  {
+    "submissionIndex": 4,
+    "timestamp": "2025-12-14T09:09:42.851Z",
+    "visitorID": "cl",
+    "score": 6,
+    "percentage": 100,
+    "question1": "B",
+    "question2": "B",
+    "question3": "B",
+    "question4": "C",
+    "question5": "B",
+    "question6": "B"
+  },
+  {
+    "submissionIndex": 5,
+    "timestamp": "2025-12-14T09:12:18.960Z",
+    "visitorID": "cl",
+    "score": 6,
+    "percentage": 100,
+    "question1": "B",
+    "question2": "B",
+    "question3": "B",
+    "question4": "C",
+    "question5": "B",
+    "question6": "B"
+  }
+]
