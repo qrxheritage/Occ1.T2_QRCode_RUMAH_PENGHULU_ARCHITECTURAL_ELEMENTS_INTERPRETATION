@@ -1,4 +1,4 @@
-// quiz.js - 已移除 source 参数逻辑
+// quiz.js - Serverless 版本 (直接与 Supabase 交互)
 const CORRECT_ANSWERS = {
   q1: "b",
   q2: "b",
@@ -188,6 +188,31 @@ function updateLanguage(lang) {
   });
 }
 
+// ===== 新增：追踪点击（插入空记录到 quiz_clicks 表）=====
+async function trackQuizClick() {
+  try {
+    if (!window.supabaseClient) {
+      console.error('❌ Supabase client not initialized');
+      return false;
+    }
+
+    const { error } = await window.supabaseClient
+      .from('quiz_clicks')
+      .insert([{}]); // 插入空记录，只记录时间戳
+
+    if (error) {
+      console.error('❌ Failed to track click:', error.message);
+      return false;
+    }
+
+    console.log('✅ Quiz click tracked successfully');
+    return true;
+  } catch (err) {
+    console.error('❌ Unexpected error tracking click:', err);
+    return false;
+  }
+}
+
 // Save to Supabase
 async function saveQuizToSupabase(username, score, percentage, answers) {
   try {
@@ -271,15 +296,9 @@ async function submitQuiz() {
 }
 
 async function resetQuiz() {
-  try {
-    await fetch("/api/track-click", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
-    });
-    console.log("✅ Retake tracked");
-  } catch (err) {
-    console.error("Failed to register retake:", err);
-  }
+  // 追踪重新挑战事件
+  await trackQuizClick();
+  
   document.getElementById("results-container").classList.add("hidden");
   document.getElementById("quiz-content").classList.remove("hidden");
   document.querySelectorAll("input[type=radio]").forEach(r => (r.checked = false));
@@ -363,13 +382,10 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
-// Initialize on page load
-window.onload = function() {
-  // Track visit
-  fetch("/api/track-click", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" }
-  }).catch(err => console.error("Failed to track visit:", err));
+// ===== 修改：页面加载时追踪访问 =====
+window.onload = async function() {
+  // 追踪页面访问
+  await trackQuizClick();
 
   // Get language from URL or localStorage
   const urlParams = new URLSearchParams(window.location.search);

@@ -1,7 +1,7 @@
 /**
- * MainPage.js (安全版本)
+ * MainPage.js (Serverless 版本)
  * 核心逻辑：多语言切换、页面跳转、管理员权限校验及数据导出 (Supabase)
- * 安全特性：密码验证通过后端 API，前端不存储明文密码
+ * 安全特性：前端暗号验证模式 (无后端 API)
  */
 
 const content = {
@@ -185,7 +185,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ===== ADMIN : Ctrl+Shift+A 激活管理员模式 =====
+// ===== ADMIN : Ctrl+Shift+A 激活管理员模式（暗号验证）=====
 document.addEventListener('keydown', function(e) {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
         e.preventDefault();
@@ -193,35 +193,19 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// ===== 安全的密码验证（通过后端 API）=====
-async function promptAdminPassword() {
-    const pw = prompt('🔐 Enter admin password:');
+// ===== 暗号模式：前端密码验证 =====
+function promptAdminPassword() {
+    const pw = prompt('🔐 Enter Admin Password:');
     if (!pw) return;
     
-    try {
-        const response = await fetch('/api/admin/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: pw })
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            // 存储 token（而不是密码）
-            sessionStorage.setItem('adminToken', result.token);
-            sessionStorage.setItem('adminTokenExpiry', Date.now() + (result.expiresIn * 1000));
-            sessionStorage.setItem('isAdmin', 'true');
-            
-            showExportButtons();
-            alert('✅ Admin access granted!');
-            console.log('✅ Token expires in 15 minutes');
-        } else {
-            alert('❌ Invalid password');
-        }
-    } catch (err) {
-        console.error('❌ Verification failed:', err);
-        alert('❌ Verification failed. Please try again.');
+    // 验证密码（暗号模式）
+    if (pw === 'heritage2025') {
+        sessionStorage.setItem('isAdmin', 'true');
+        showExportButtons();
+        alert('✅ Admin access granted!');
+        console.log('✅ Admin mode activated');
+    } else {
+        alert('❌ Invalid password');
     }
 }
 
@@ -242,26 +226,16 @@ function showExportButtons() {
 
 function checkAdminAccess() {
     const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-    const token = sessionStorage.getItem('adminToken');
-    const expiry = parseInt(sessionStorage.getItem('adminTokenExpiry'));
-    
-    // 检查 token 是否过期
-    if (isAdmin && token && expiry > Date.now()) {
+    if (isAdmin) {
         showExportButtons();
-    } else if (isAdmin && expiry <= Date.now()) {
-        // Token 已过期
-        sessionStorage.removeItem('adminToken');
-        sessionStorage.removeItem('adminTokenExpiry');
-        sessionStorage.removeItem('isAdmin');
-        console.log('⏱️ Admin token expired');
     }
 }
 
-// ===== ADMIN : 核心导出功能 (使用安全 token) =====
+// ===== ADMIN : 导出提交记录 =====
 async function exportSubmissions() {
-    const token = sessionStorage.getItem('adminToken');
+    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     
-    if (!token) {
+    if (!isAdmin) {
         alert('❌ Please login first (Ctrl+Shift+A)');
         return;
     }
@@ -302,55 +276,64 @@ async function exportSubmissions() {
     }
 }
 
+// ===== ADMIN : 导出统计数据（修改版：直接从 Supabase 获取数据）=====
 async function exportStats() {
-    const token = sessionStorage.getItem('adminToken');
+    const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     
-    if (!token) {
+    if (!isAdmin) {
         alert('❌ Please login first (Ctrl+Shift+A)');
         return;
     }
     
     try {
-        console.log('📊 Calculating summary stats...');
+        console.log('📊 Calculating summary stats from Supabase...');
         
-        const { data, error } = await window.supabaseClient
-            .from('quiz_responses')
-            .select('percentage');
+        // 并行获取两个数据源
+        const [submissionsResult, clicksResult] = await Promise.all([
+            // 获取所有提交的 percentage 数据
+            window.supabaseClient
+                .from('quiz_responses')
+                .select('percentage'),
+            
+            // 获取点击总数（使用 count）
+            window.supabaseClient
+                .from('quiz_clicks')
+                .select('*', { count: 'exact', head: true })
+        ]);
 
-        if (error) throw error;
-        if (!data || data.length === 0) {
-            alert('No data to calculate stats.');
-            return;
-        }
+        // 检查错误
+        if (submissionsResult.error) throw submissionsResult.error;
+        if (clicksResult.error) throw clicksResult.error;
 
-        const totalSubmissions = data.length;
-        const sumOfPercentages = data.reduce((sum, row) => sum + (parseFloat(row.percentage) || 0), 0);
-        const averagePercentage = totalSubmissions > 0 ? (sumOfPercentages / totalSubmissions).toFixed(2) : "0.00";
+        const submissionsData = submissionsResult.data || [];
+        const totalSubmissions = submissionsData.length;
+        const totalClicks = clicksResult.count || 0;
+
+        // 计算平均分数
+        const sumOfPercentages = submissionsData.reduce(
+            (sum, row) => sum + (parseFloat(row.percentage) || 0), 
+            0
+        );
+        const averagePercentage = totalSubmissions > 0 
+            ? (sumOfPercentages / totalSubmissions).toFixed(2) 
+            : "0.00";
         
-        // 获取点击量数据来计算 completion rate
-        let totalClicks = totalSubmissions;
-        try {
-            const clicksResponse = await fetch('/api/get-clicks');
-            const clicksData = await clicksResponse.json();
-            totalClicks = clicksData.totalClicks || totalSubmissions;
-        } catch (e) {
-            console.log('⚠️ 无法获取点击量数据，使用提交数代替');
-        }
-        
+        // 计算完成率
         const completionRate = totalClicks > 0 
             ? ((totalSubmissions / totalClicks) * 100).toFixed(2)
             : "0.00";
 
         const statsSummary = [{
             'totalSubmissions': totalSubmissions,
+            'totalClicks': totalClicks,
+            'completionRate': completionRate + '%',
             'sumOfPercentages': sumOfPercentages.toFixed(2),
-            'averagePercentage': averagePercentage + '%',
-            'completionRate': completionRate + '%'
+            'averagePercentage': averagePercentage + '%'
         }];
 
         const csv = Papa.unparse(statsSummary);
         downloadCSV(csv, 'quiz_stats.csv');
-        console.log('✅ Stats exported');
+        console.log('✅ Stats exported:', statsSummary[0]);
     } catch (err) {
         console.error('❌ Stats export failed:', err);
         alert('Stats export failed: ' + err.message);
