@@ -1,4 +1,3 @@
-/* Extracted from rumah-tengah.html */
 :root {
             --primary-brown: #8B4513; 
             --dark-brown: #A0522D;
@@ -258,49 +257,50 @@
 
         
         /* Info Panel (Modal)*/
-.info-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    
-    /* GRADIENT: Blended gradient */
-    background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
-    border-radius: 20px; 
-    border: none;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
-                inset 0 0 40px rgba(139, 69, 19, 0.1);
+        .info-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            
+            /* GRADIENT: Blended gradient */
+            background: linear-gradient(to right, #fff9ee 0%, #fff0da 100%); 
+            border-radius: 20px; 
+            border: none;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4), 
+                        inset 0 0 40px rgba(139, 69, 19, 0.1);
 
-    padding: 40px;
-    max-width: 600px;
-    width: 90%;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1000;
-    max-height: 80vh;
-    overflow-y: auto;
-}
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
 
-/* Quiz Mode: Warmer, more distinct orange-blend gradient */
-.info-panel.quiz-mode {
-    background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
-    box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
-                inset 0 0 40px rgba(210, 105, 30, 0.1);
-}
+        /* Quiz Mode: Warmer, more distinct orange-blend gradient */
+        .info-panel.quiz-mode {
+            background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
+            box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
+                        inset 0 0 40px rgba(210, 105, 30, 0.1);
+        }
 
-/* Subtle separator for titles */
-.info-panel h3 {
-    color: #5D4037;
-    font-family: 'Playfair Display', serif;
-    text-align: center;
-    margin-bottom: 20px;
-    background: linear-gradient(to right, transparent, #A0522D, transparent);
-    background-repeat: no-repeat;
-    background-size: 60% 2px;
-    background-position: bottom center;
-    padding-bottom: 15px;
-}
+        /* Subtle separator for titles */
+        .info-panel h3 {
+            color: #5D4037;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, transparent, #A0522D, transparent);
+            background-repeat: no-repeat;
+            background-size: 60% 2px;
+            background-position: bottom center;
+            padding-bottom: 15px;
+        }
+
         .info-panel.active {
             opacity: 1;
             visibility: visible;
@@ -387,7 +387,7 @@
 
         /* Quiz/Question Specific Style*/
         .info-panel.quiz-mode {
-            background: var(--quiz-bg-color); /* Visually separates quiz from info */
+            background: var(--quiz-bg-color);
             border-bottom: 5px solid var(--dark-brown);
         }
         .info-panel.quiz-mode h3 {
@@ -460,26 +460,43 @@
             margin: 0;
             color: #2e7d32;
         }
-        /* End Quiz/Question Specific Styles */
 
-        @media (max-width: 768px) {
-            .header {
-                padding: 60px 40px;
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .header, .content {
+                padding-left: 40px;
+                padding-right: 40px;
             }
-
+            .header {
+                padding-top: 40px;
+                padding-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 20px 10px; }
+            .header {
+                padding: 40px 15px 15px 15px;
+            }
             .header h1 {
                 font-size: 1.8em;
             }
-
             .content {
-                padding: 30px 20px;
+                padding: 20px;
             }
-
             .language-buttons {
                 position: relative;
                 top: auto;
                 right: auto;
                 justify-content: center;
+                margin-top: 15px;
                 margin-bottom: 20px;
+            }
+            .back-btn {
+                top: 10px;
+                left: 10px;
+            }
+            .question-options {
+                grid-template-columns: 1fr;
             }
         }

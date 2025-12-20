@@ -1,7 +1,7 @@
 /**
- * MainPage.js (Serverless 版本)
- * 核心逻辑：多语言切换、页面跳转、管理员权限校验及数据导出 (Supabase)
- * 安全特性：前端暗号验证模式 (无后端 API)
+ * MainPage.js (Serverless version)
+ * Core logic: Language switching, page navigation, admin permission validation, and data export (Supabase)
+ * Security features: Frontend passphrase verification mode (no backend API)
  */
 
 const content = {
@@ -99,7 +99,6 @@ const content = {
 
 let currentLang = 'en';
 
-// ===== 语言切换逻辑 =====
 function changeLanguage(lang, clickedButton) {
     localStorage.setItem("siteLanguage", lang);
     currentLang = lang;
@@ -150,7 +149,6 @@ function changeLanguage(lang, clickedButton) {
     });
 }
 
-// ===== 页面导航 =====
 function revealContent() {
     const contentContainer = document.getElementById('main-content-container');
     window.scrollTo({
@@ -171,7 +169,7 @@ function openFeedback() {
     window.open('https://forms.gle/tARHqgcGQiYoHMES6', '_blank');
 }
 
-// ===== 提示卡片逻辑 =====
+
 function toggleInfo() {
     const infoCard = document.getElementById('infoCard');
     if (infoCard) infoCard.classList.toggle('show');
@@ -185,7 +183,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ===== ADMIN : Ctrl+Shift+A 激活管理员模式（暗号验证）=====
+// ===== ADMIN : Ctrl+Shift+A =====
 document.addEventListener('keydown', function(e) {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
         e.preventDefault();
@@ -193,12 +191,11 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// ===== 暗号模式：前端密码验证 =====
 function promptAdminPassword() {
     const pw = prompt('🔐 Enter Admin Password:');
     if (!pw) return;
     
-    // 验证密码（暗号模式）
+    // frontend password check
     if (pw === 'heritage2025') {
         sessionStorage.setItem('isAdmin', 'true');
         showExportButtons();
@@ -231,7 +228,7 @@ function checkAdminAccess() {
     }
 }
 
-// ===== ADMIN : 导出提交记录 =====
+// ===== ADMIN : export records =====
 async function exportSubmissions() {
     const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     
@@ -276,7 +273,7 @@ async function exportSubmissions() {
     }
 }
 
-// ===== ADMIN : 导出统计数据（修改版：直接从 Supabase 获取数据）=====
+// ===== ADMIN : export stats from supabase=====
 async function exportStats() {
     const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
     
@@ -287,21 +284,17 @@ async function exportStats() {
     
     try {
         console.log('📊 Calculating summary stats from Supabase...');
-        
-        // 并行获取两个数据源
         const [submissionsResult, clicksResult] = await Promise.all([
-            // 获取所有提交的 percentage 数据
             window.supabaseClient
                 .from('quiz_responses')
                 .select('percentage'),
             
-            // 获取点击总数（使用 count）
+            //get number of clicks from supabase
             window.supabaseClient
                 .from('quiz_clicks')
                 .select('*', { count: 'exact', head: true })
         ]);
 
-        // 检查错误
         if (submissionsResult.error) throw submissionsResult.error;
         if (clicksResult.error) throw clicksResult.error;
 
@@ -309,16 +302,15 @@ async function exportStats() {
         const totalSubmissions = submissionsData.length;
         const totalClicks = clicksResult.count || 0;
 
-        // 计算平均分数
         const sumOfPercentages = submissionsData.reduce(
             (sum, row) => sum + (parseFloat(row.percentage) || 0), 
             0
         );
+
         const averagePercentage = totalSubmissions > 0 
             ? (sumOfPercentages / totalSubmissions).toFixed(2) 
             : "0.00";
-        
-        // 计算完成率
+
         const completionRate = totalClicks > 0 
             ? ((totalSubmissions / totalClicks) * 100).toFixed(2)
             : "0.00";
@@ -352,7 +344,7 @@ function downloadCSV(csv, filename) {
     URL.revokeObjectURL(url);
 }
 
-// ===== 初始化加载 =====
+// ===== INITIALIZATION =====
 window.onload = function () {
     const savedLang = localStorage.getItem("siteLanguage") || "en";
     const btn = document.querySelector(`.lang-btn[onclick*="${savedLang}"]`);

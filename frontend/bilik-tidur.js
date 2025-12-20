@@ -1,4 +1,3 @@
-// Extracted from bilik-tidur.html
 const content = {
             en: {
                 title: "Bilik Tidur — Bedroom",
@@ -77,7 +76,7 @@ const content = {
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             if (clickedButton) {
                 clickedButton.classList.add('active');
-            } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
+            } else { 
                  const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
                  if (initialBtn) initialBtn.classList.add('active');
             }
@@ -87,7 +86,6 @@ const content = {
             document.getElementById('pageTitle').textContent = langContent.title;
             document.getElementById('introText').innerHTML = langContent.intro;
             
-            // Optional: Update back button text if it exists
             const backBtnTextEl = document.getElementById('backBtnText');
             if (backBtnTextEl) backBtnTextEl.textContent = langContent.backBtnText;
             
@@ -174,12 +172,10 @@ const content = {
                 
                 if (index === questionData.correctAnswer) {
                     btn.classList.add('correct');
-                    // If the user selected the correct one, make it visually obvious
                     if (index === selectedIndex) {
                         btn.style.boxShadow = '0 0 15px var(--success-green)'; 
                     }
                 } else if (index === selectedIndex) {
-                    // If selected option is wrong
                     btn.classList.add('incorrect');
                 }
             });

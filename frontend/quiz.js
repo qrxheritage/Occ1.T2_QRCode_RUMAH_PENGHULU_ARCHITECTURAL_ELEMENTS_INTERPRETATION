@@ -1,4 +1,3 @@
-// quiz.js - Serverless 版本 (直接与 Supabase 交互)
 const CORRECT_ANSWERS = {
   q1: "b",
   q2: "b",
@@ -188,7 +187,7 @@ function updateLanguage(lang) {
   });
 }
 
-// ===== 新增：追踪点击（插入空记录到 quiz_clicks 表）=====
+// ===== track quiz click =====
 async function trackQuizClick() {
   try {
     if (!window.supabaseClient) {
@@ -198,7 +197,7 @@ async function trackQuizClick() {
 
     const { error } = await window.supabaseClient
       .from('quiz_clicks')
-      .insert([{}]); // 插入空记录，只记录时间戳
+      .insert([{}]); 
 
     if (error) {
       console.error('❌ Failed to track click:', error.message);
@@ -296,7 +295,6 @@ async function submitQuiz() {
 }
 
 async function resetQuiz() {
-  // 追踪重新挑战事件
   await trackQuizClick();
   
   document.getElementById("results-container").classList.add("hidden");
@@ -382,12 +380,10 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
-// ===== 修改：页面加载时追踪访问 =====
-window.onload = async function() {
-  // 追踪页面访问
-  await trackQuizClick();
 
-  // Get language from URL or localStorage
+window.onload = async function() {
+  await trackQuizClick();
+  
   const urlParams = new URLSearchParams(window.location.search);
   const langParam = urlParams.get('lang');
   

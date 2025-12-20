@@ -1,4 +1,3 @@
-// Extracted from rumah-tengah.html
 const content = {
             en: {
                 title: "Rumah Tengah — Middle Room",
@@ -96,7 +95,7 @@ const content = {
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             if (clickedButton) {
                 clickedButton.classList.add('active');
-            } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
+            } else { 
                  const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
                  if (initialBtn) initialBtn.classList.add('active');
             }
@@ -170,7 +169,7 @@ const content = {
                 } else if (hotspotId === 'question') {
                     const questionData = langContent.question;
                     infoTitle.textContent = questionData.title;
-                    infoPanel.classList.add('quiz-mode'); // Add quiz class for distinct style
+                    infoPanel.classList.add('quiz-mode');
                     infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
                     questionOptions.style.display = 'grid';
                     
@@ -197,12 +196,10 @@ const content = {
                 
                 if (index === questionData.correctAnswer) {
                     btn.classList.add('correct');
-                    // If the user selected the correct one, make it visually obvious
                     if (index === selectedIndex) {
                         btn.style.boxShadow = '0 0 15px var(--success-green)'; 
                     }
                 } else if (index === selectedIndex) {
-                    // If selected option is wrong
                     btn.classList.add('incorrect');
                 }
             });

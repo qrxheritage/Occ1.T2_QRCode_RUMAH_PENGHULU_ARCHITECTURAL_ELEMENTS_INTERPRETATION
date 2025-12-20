@@ -1,4 +1,3 @@
-/* Extracted from bilik-tidur.html */
 :root {
             --primary-brown: #8B4513; 
             --dark-brown: #A0522D;
@@ -39,7 +38,6 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             overflow: hidden;
         }
-
         
         .header {
             background: linear-gradient(135deg, #7C401C 0%, var(--accent-orange) 100%); 
@@ -186,7 +184,7 @@
             transform: translate(-50%, 0%);
         }
 
-        /* Updated Hover States - Keeps original translate while adding subtle scale */
+        /* Updated Hover States */
         .hotspot-bed:hover {
             transform: translate(-50%, -50%) scale(1.1);
         }
@@ -274,7 +272,7 @@
             overflow-y: auto;
         }
 
-        /* Quiz Mode: Warmer, more distinct orange-blend gradient */
+        /* Quiz Mode */
         .info-panel.quiz-mode {
             background: radial-gradient(circle, #fff3e0 0%, #f7d7ad 100%);
             box-shadow: 0 25px 60px rgba(160, 82, 45, 0.3), 
@@ -382,7 +380,7 @@
 
         /* Quiz/Question Specific Style*/
         .info-panel.quiz-mode {
-            background: var(--quiz-bg-color); /* Visually separates quiz from info */
+            background: var(--quiz-bg-color); 
             border-bottom: 5px solid var(--dark-brown);
         }
         .info-panel.quiz-mode h3 {
@@ -457,24 +455,41 @@
         }
 
         /* End Quiz/Question Specific Styles */
-        @media (max-width: 768px) {
-            .header {
-                padding: 60px 40px;
+        @media (max-width: 992px) {
+            .header, .content {
+                padding-left: 40px;
+                padding-right: 40px;
             }
-
+            .header {
+                padding-top: 40px;
+                padding-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 20px 10px; }
+            .header {
+                padding: 40px 15px 15px 15px;
+            }
             .header h1 {
                 font-size: 1.8em;
             }
-
             .content {
-                padding: 30px 20px;
+                padding: 20px;
             }
-
             .language-buttons {
                 position: relative;
                 top: auto;
                 right: auto;
                 justify-content: center;
+                margin-top: 15px;
                 margin-bottom: 20px;
+            }
+            .back-btn {
+                top: 10px;
+                left: 10px;
+            }
+            .question-options {
+                grid-template-columns: 1fr;
             }
         }

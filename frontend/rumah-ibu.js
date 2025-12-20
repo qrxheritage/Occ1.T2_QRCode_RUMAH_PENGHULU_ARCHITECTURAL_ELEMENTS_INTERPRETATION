@@ -1,4 +1,3 @@
-// Extracted from rumah-ibu.html
 const content = {
             en: {
                 title: "Rumah Ibu — The Main Living Space of House",
@@ -80,153 +79,150 @@ const content = {
             }
         };
 
-        let currentLang = 'en';
+let currentLang = 'en';
 
-        // Helper function to get language from URL query
-        function getQueryLang() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('lang');
-        }
+// Helper function to get language from URL query
+function getQueryLang() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('lang');
+}
 
-        function changeLanguage(lang, clickedButton) {
-            localStorage.setItem("siteLanguage", lang);
-            currentLang = lang;
+function changeLanguage(lang, clickedButton) {
+    localStorage.setItem("siteLanguage", lang);
+    currentLang = lang;
+    
+    // Update body class for Chinese font
+    document.body.className = lang === 'zh' ? 'lang-zh' : '';
+    
+    // Update active button classes
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    if (clickedButton) {
+        clickedButton.classList.add('active');
+    } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
+            const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
+            if (initialBtn) initialBtn.classList.add('active');
+    }
+
+    // Update content
+    const langContent = content[lang];
+    document.getElementById('pageTitle').textContent = langContent.title;
+    document.getElementById('introText').innerHTML = langContent.intro;
+    
+    // Optional: Update back button text if it exists
+    const backBtnTextEl = document.getElementById('backBtnText');
+    if (backBtnTextEl) backBtnTextEl.textContent = langContent.backBtnText;
+    
+    // Update preview text
+    document.getElementById('preview1').textContent = langContent.hotspot1.title;
+    document.getElementById('preview2').textContent = langContent.hotspot2.title;
+
+    // Close panel and reset quiz state if language changes while panel is open
+    if (infoPanel.classList.contains('active')) {
+        closePanel();
+    }
+}
+
+const hotspots = document.querySelectorAll('.hotspot');
+const infoPanel = document.getElementById('infoPanel');
+const overlay = document.getElementById('overlay');
+const closeBtn = document.getElementById('closeBtn');
+const infoTitle = document.getElementById('infoTitle');
+const infoImage = document.getElementById('infoImage');
+const infoContent = document.getElementById('infoContent');
+const questionOptions = document.getElementById('questionOptions');
+const explanation = document.getElementById('explanation');
+const explanationText = document.getElementById('explanationText');
+
+hotspots.forEach(hotspot => {
+    const preview = hotspot.querySelector('.hotspot-preview');
+    const hotspotId = hotspot.getAttribute('data-hotspot');
+    
+    // Hover logic (unchanged)
+    hotspot.addEventListener('mouseenter', () => { if (preview) preview.classList.add('show'); });
+    hotspot.addEventListener('mouseleave', () => { if (preview) preview.classList.remove('show'); });
+    
+    // Click logic
+    hotspot.addEventListener('click', () => {
+        const langContent = content[currentLang];
+        
+        // Reset panel state
+        questionOptions.innerHTML = '';
+        explanation.classList.remove('show');
+        questionOptions.style.display = 'none';
+        infoImage.style.display = 'none';
+        infoContent.innerHTML = '';
+        infoPanel.classList.remove('quiz-mode'); // Remove quiz class by default
+        
+        if (hotspotId === '1' || hotspotId === '2') {
+            const data = langContent['hotspot' + hotspotId];
+            infoTitle.textContent = data.title;
+            infoImage.src = (hotspotId === '1') ? 'https://i.imgur.com/WTu5haI.png' : 'https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024';
+            infoImage.style.display = 'block';
+            infoContent.innerHTML = '<ul>' + data.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
+
+        } else if (hotspotId === 'question') {
+            const questionData = langContent.question;
+            infoTitle.textContent = questionData.title;
+            infoPanel.classList.add('quiz-mode'); 
+            infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
+            questionOptions.style.display = 'grid';
             
-            // Update body class for Chinese font
-            document.body.className = lang === 'zh' ? 'lang-zh' : '';
-            
-            // Update active button classes
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            if (clickedButton) {
-                clickedButton.classList.add('active');
-            } else { // Handle initialization case where clickedButton is null (from DOMContentLoaded)
-                 const initialBtn = document.querySelector(`.lang-btn[onclick*="${lang}"]`);
-                 if (initialBtn) initialBtn.classList.add('active');
-            }
-
-            // Update content
-            const langContent = content[lang];
-            document.getElementById('pageTitle').textContent = langContent.title;
-            document.getElementById('introText').innerHTML = langContent.intro;
-            
-            // Optional: Update back button text if it exists
-            const backBtnTextEl = document.getElementById('backBtnText');
-            if (backBtnTextEl) backBtnTextEl.textContent = langContent.backBtnText;
-            
-            // Update preview text
-            document.getElementById('preview1').textContent = langContent.hotspot1.title;
-            document.getElementById('preview2').textContent = langContent.hotspot2.title;
-
-            // Close panel and reset quiz state if language changes while panel is open
-            if (infoPanel.classList.contains('active')) {
-                closePanel();
-            }
-        }
-
-        const hotspots = document.querySelectorAll('.hotspot');
-        const infoPanel = document.getElementById('infoPanel');
-        const overlay = document.getElementById('overlay');
-        const closeBtn = document.getElementById('closeBtn');
-        const infoTitle = document.getElementById('infoTitle');
-        const infoImage = document.getElementById('infoImage');
-        const infoContent = document.getElementById('infoContent');
-        const questionOptions = document.getElementById('questionOptions');
-        const explanation = document.getElementById('explanation');
-        const explanationText = document.getElementById('explanationText');
-
-        hotspots.forEach(hotspot => {
-            const preview = hotspot.querySelector('.hotspot-preview');
-            const hotspotId = hotspot.getAttribute('data-hotspot');
-            
-            // Hover logic (unchanged)
-            hotspot.addEventListener('mouseenter', () => { if (preview) preview.classList.add('show'); });
-            hotspot.addEventListener('mouseleave', () => { if (preview) preview.classList.remove('show'); });
-            
-            // Click logic
-            hotspot.addEventListener('click', () => {
-                const langContent = content[currentLang];
-                
-                // Reset panel state
-                questionOptions.innerHTML = '';
-                explanation.classList.remove('show');
-                questionOptions.style.display = 'none';
-                infoImage.style.display = 'none';
-                infoContent.innerHTML = '';
-                infoPanel.classList.remove('quiz-mode'); // Remove quiz class by default
-                
-                if (hotspotId === '1' || hotspotId === '2') {
-                    const data = langContent['hotspot' + hotspotId];
-                    infoTitle.textContent = data.title;
-                    infoImage.src = (hotspotId === '1') ? 'https://i.imgur.com/WTu5haI.png' : 'https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024';
-                    infoImage.style.display = 'block';
-                    infoContent.innerHTML = '<ul>' + data.points.map(p => '<li>' + p + '</li>').join('') + '</ul>';
-
-                } else if (hotspotId === 'question') {
-                    const questionData = langContent.question;
-                    infoTitle.textContent = questionData.title;
-                    infoPanel.classList.add('quiz-mode'); // Add quiz class for distinct style
-                    infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
-                    questionOptions.style.display = 'grid';
-                    
-                    questionData.options.forEach((option, index) => {
-                        const btn = document.createElement('button');
-                        btn.className = 'option-btn';
-                        btn.textContent = option;
-                        // Attach the modified answer handler
-                        btn.addEventListener('click', () => handleAnswer(index, questionData));
-                        questionOptions.appendChild(btn);
-                    });
-                }
-                
-                infoPanel.classList.add('active');
-                overlay.classList.add('active');
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;                    
+                btn.addEventListener('click', () => handleAnswer(index, questionData));
+                questionOptions.appendChild(btn);
             });
-        });
-
-        // Restored and slightly improved handleAnswer function
-        function handleAnswer(selectedIndex, questionData) {
-            const options = questionOptions.querySelectorAll('.option-btn');
-            
-            options.forEach((btn, index) => {
-                btn.disabled = true; // Disable all options after first click
-                
-                if (index === questionData.correctAnswer) {
-                    btn.classList.add('correct');
-                    // If the user selected the correct one, make it visually obvious
-                    if (index === selectedIndex) {
-                        btn.style.boxShadow = '0 0 15px var(--success-green)'; 
-                    }
-                } else if (index === selectedIndex) {
-                    // If selected option is wrong
-                    btn.classList.add('incorrect');
-                }
-            });
-            
-            explanationText.textContent = questionData.explanation;
-            explanation.classList.add('show');
         }
+        
+        infoPanel.classList.add('active');
+        overlay.classList.add('active');
+    });
+});
 
-        function closePanel() {
-            infoPanel.classList.remove('active');
-            infoPanel.classList.remove('quiz-mode');
-            overlay.classList.remove('active');
-        }
-
-        closeBtn.addEventListener('click', closePanel);
-        overlay.addEventListener('click', closePanel);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closePanel();
+// Restored and slightly improved handleAnswer function
+function handleAnswer(selectedIndex, questionData) {
+    const options = questionOptions.querySelectorAll('.option-btn');
+    
+    options.forEach((btn, index) => {
+        btn.disabled = true; // Disable all options after first click
+        
+        if (index === questionData.correctAnswer) {
+            btn.classList.add('correct');
+            if (index === selectedIndex) {
+                btn.style.boxShadow = '0 0 15px var(--success-green)'; 
             }
-        });
+        } else if (index === selectedIndex) {
+            btn.classList.add('incorrect');
+        }
+    });
+    
+    explanationText.textContent = questionData.explanation;
+    explanation.classList.add('show');
+}
 
-        // Initialize language
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlLang = getQueryLang();
-            const savedLang = localStorage.getItem("siteLanguage");
-            const initialLang = urlLang || savedLang || "en";
-            
-            const btn = document.querySelector(`.lang-btn[onclick*="${initialLang}"]`);
-            changeLanguage(initialLang, btn);
-        });
+function closePanel() {
+    infoPanel.classList.remove('active');
+    infoPanel.classList.remove('quiz-mode');
+    overlay.classList.remove('active');
+}
+
+closeBtn.addEventListener('click', closePanel);
+overlay.addEventListener('click', closePanel);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closePanel();
+    }
+});
+
+// Initialize language
+document.addEventListener('DOMContentLoaded', () => {
+    const urlLang = getQueryLang();
+    const savedLang = localStorage.getItem("siteLanguage");
+    const initialLang = urlLang || savedLang || "en";
+    
+    const btn = document.querySelector(`.lang-btn[onclick*="${initialLang}"]`);
+    changeLanguage(initialLang, btn);
+});
