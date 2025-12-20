@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House Structure Quiz – Rumah Penghulu Abu Seman</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <link rel="stylesheet" href="./quiz.css">
+</head>
+
+<body>
+  <div class="main-container">
+  <header class="site-header">
+    <div class="lang-picker">
+        <button class="lang-btn active" data-lang="en">
+          <i class="fas fa-globe"></i> English
+        </button>
+        <button class="lang-btn" data-lang="ms">
+          <i class="fas fa-globe"></i> Melayu
+        </button>
+        <button class="lang-btn" data-lang="zh">
+          <i class="fas fa-globe"></i> 中文
+        </button>
+      </div>
+
+    <div class="header-content">
+      <div class="logo-group">
+        <div class="logo-title">
+          Rumah Penghulu Abu Seman
+        </div>
+        <div class="logo-subtitle" data-translate="subtitle">
+          Exploring Traditional Malay House Structure
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="quiz-header">
+        <h1 data-translate="quiz-title">House Structure Quiz</h1>
+        <p data-translate="quiz-desc">Test your knowledge about Rumah Penghulu Abu Seman</p>
+      </div>
+
+      <div class="user-id-wrapper">
+        <label for="user-id-input" data-translate="nickname-label">
+          Visitor Nickname (optional)
+        </label>
+        <input
+          type="text"
+          id="user-id-input"
+          data-translate-placeholder="nickname-placeholder"
+          placeholder="Enter your nickname"
+        />
+        <small data-translate="nickname-help">
+          This helps staff review quiz responses in Google Sheets.
+        </small>
+      </div>
+
+      <div id="quiz-content">
+        <!-- Question 1 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q1-text">
+            What is the main function of Rumah Ibu in Rumah Penghulu Abu Seman?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q1" value="a" />
+                <span class="option-text" data-translate="q1-a">A storage area for kitchen tools</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q1" value="b" />
+                <span class="option-text" data-translate="q1-b">A space for receiving guests and hosting important events</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q1" value="c" />
+                <span class="option-text" data-translate="q1-c">A private bedroom area</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q1" value="d" />
+                <span class="option-text" data-translate="q1-d">A place for crafting wood carvings</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q2-text">
+            What is traditionally prepared in Rumah Ibu during a wedding ceremony?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q2" value="a" />
+                <span class="option-text" data-translate="q2-a">A clay stove</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q2" value="b" />
+                <span class="option-text" data-translate="q2-b">A pelamin decorated with needlework</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q2" value="c" />
+                <span class="option-text" data-translate="q2-c">A brass cooking pot</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q2" value="d" />
+                <span class="option-text" data-translate="q2-d">A set of mengkuang mats</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q3-text">
+            Why are the carvings and windows in Rumah Tengah simpler?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q3" value="a" />
+                <span class="option-text" data-translate="q3-a">Because it is used for formal ceremonies</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q3" value="b" />
+                <span class="option-text" data-translate="q3-b">Because it serves domestic functions</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q3" value="c" />
+                <span class="option-text" data-translate="q3-c">Because it stores expensive furniture</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q3" value="d" />
+                <span class="option-text" data-translate="q3-d">Because it is the highest part of the house</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q4-text">
+            What type of traditional stove is mentioned in the Rumah Tengah section?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q4" value="a" />
+                <span class="option-text" data-translate="q4-a">Metal stove with electric heating</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q4" value="b" />
+                <span class="option-text" data-translate="q4-b">Gas stove made from steel</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q4" value="c" />
+                <span class="option-text" data-translate="q4-c">Wooden box packed with clay and banana stalks</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q4" value="d" />
+                <span class="option-text" data-translate="q4-d">Stone stove fueled by charcoal only</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q5-text">
+            Why does this house include beds instead of only mengkuang mats?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q5" value="a" />
+                <span class="option-text" data-translate="q5-a">Because the family had many guests</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q5" value="b" />
+                <span class="option-text" data-translate="q5-b">Because the penghulu held a respected social position</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q5" value="c" />
+                <span class="option-text" data-translate="q5-c">Because the weather was too cold</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q5" value="d" />
+                <span class="option-text" data-translate="q5-d">Because beds were required for ceremonies</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-block">
+          <span class="question-number" data-translate="question-label">Question</span>
+          <div class="question-text" data-translate="q6-text">
+            Which bed type is found in the penghulu's bedroom?
+          </div>
+          <ul class="options-list">
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q6" value="a" />
+                <span class="option-text" data-translate="q6-a">A simple timber bed</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q6" value="b" />
+                <span class="option-text" data-translate="q6-b">A brass bed with three sides</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q6" value="c" />
+                <span class="option-text" data-translate="q6-c">A stone platform bed</span>
+              </label>
+            </li>
+            <li class="option-item">
+              <label class="option-label">
+                <input type="radio" name="q6" value="d" />
+                <span class="option-text" data-translate="q6-d">A bamboo foldable bed</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-primary" id="submit-btn" data-translate="submit-btn">
+            Submit Quiz
+          </button>
+          <a href="javascript:void(0)" class="btn btn-secondary" onclick="goBackToMain()" data-translate="back-btn">
+            Back to Main
+          </a>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div id="results-container" class="results-container hidden">
+        <h2 data-translate="results-title">Quiz Results</h2>
+        <div class="score-display" id="score-display">0/6</div>
+        <p class="results-message" id="results-message"></p>
+
+        <div class="results-details">
+          <h3 data-translate="your-answers">Your Answers</h3>
+          <div id="answers-list"></div>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-primary" id="retake-btn" data-translate="retake-btn">
+            Retake Quiz
+          </button>
+          <a href="javascript:void(0)" class="btn btn-secondary" onclick="goBackToMain()" data-translate="back-btn">
+            Back to Main
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-line">
+      <span data-translate="footer-text">Preserving Cultural Heritage with</span>
+      <i class="fas fa-heart footer-heart"></i>
+    </div>
+    <p class="footer-subtext" data-translate="footer-subtext">
+      Traditional Malay Architecture Education Initiative
+    </p>
+  </footer>
+  </div>
+
+  <script src="./quiz.js"></script>
+</body>
+</html>
