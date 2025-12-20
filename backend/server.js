@@ -1,279 +1,193 @@
 const express = require("express");
 const fs = require("fs-extra");
 const path = require("path");
-const { Parser } = require('@json2csv/plainjs');
 const { exec } = require('child_process');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===== ADMIN TOKEN (change this!) =====
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || "heritage2024";
+// ===== ADMIN PASSWORD (从环境变量读取，更安全) =====
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "heritage2025";
 
-// ===== File Paths =====
-const submissionsFile = path.join(__dirname, "submissions.json");
+// ===== File Paths (只保留 clicks.json) =====
 const clicksFile = path.join(__dirname, "clicks.json");
-const statsFile = path.join(__dirname, "quiz_stats.json");
+
+// ===== 临时存储验证 tokens (生产环境应使用 Redis) =====
+const validTokens = new Map(); // 格式: { token: { createdAt: timestamp } }
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// ===== Initialize JSON Files =====
+// ===== Initialize clicks.json =====
 fs.pathExists(clicksFile).then(exists => {
   if (!exists) fs.writeJson(clicksFile, { totalClicks: 0 }, { spaces: 2 });
 });
 
-fs.pathExists(statsFile).then(exists => {
-  if (!exists) {
-    fs.writeJson(statsFile, {
-      totalSubmissions: 0,
-      sumOfPercentages: 0,
-      averagePercentage: 0,
-      completionRate: 0 
-    }, { spaces: 2 });
-  }
-});
-
-fs.pathExists(submissionsFile).then(exists => {
-  if (!exists) fs.writeJson(submissionsFile, [], { spaces: 2 });
-});
-
 // ========================================
-// PUBLIC APIs (No Token Required)
+// PUBLIC APIs (无需验证)
 // ========================================
 
-// Track quiz button clicks
+// 追踪测验按钮点击（用于计算 completion rate）
 app.post("/api/track-click", async (req, res) => {
   try {
     const clicksData = await fs.readJson(clicksFile).catch(() => ({ totalClicks: 0 }));
     clicksData.totalClicks += 1;
     await fs.writeJson(clicksFile, clicksData, { spaces: 2 });
     
-    const stats = await fs.readJson(statsFile).catch(() => ({ 
-      totalSubmissions: 0, 
-      completionRate: 0 
-    }));
-    
-    const totalSubmissionsCount = stats.totalSubmissions;
-    const totalClicks = clicksData.totalClicks;
-    stats.completionRate = totalClicks > 0 
-         ? (totalSubmissionsCount / totalClicks) * 100
-         : 0;
-    await fs.writeJson(statsFile, stats, { spaces: 2 });
-
     res.json({ 
       status: "success", 
-      totalClicks: clicksData.totalClicks, 
-      completionRate: stats.completionRate 
+      totalClicks: clicksData.totalClicks 
     });
   } catch (err) {
-    console.error("Error saving click:", err);
+    console.error("Error tracking click:", err);
     res.status(500).json({ status: "error", message: err.message });
   }
 });
 
-// Submit quiz answers
-app.post("/api/submit-quiz", async (req, res) => {
+// 获取点击统计（用于前端计算 completion rate）
+app.get("/api/get-clicks", async (req, res) => {
   try {
-    const data = req.body;
-    if (!data) {
-      return res.status(400).json({ status: "error", message: "No data provided" });
-    }
-
-    const submissions = await fs.readJson(submissionsFile).catch(() => []);
-    const stats = await fs.readJson(statsFile).catch(() => ({ 
-      totalSubmissions: 0, 
-      sumOfPercentages: 0, 
-      averagePercentage: 0, 
-      completionRate: 0 
-    }));
-    
-    const submissionIndex = submissions.length;
-    const visitorID = data.visitorID || `anon-${Math.floor(Math.random() * 1000000)}`;
-    
-    const newSubmission = {
-      submissionIndex,
-      timestamp: new Date().toISOString(),
-      visitorID,
-      score: data.score || 0,
-      percentage: data.percentage || 0,
-      question1: data.question1 || null,
-      question2: data.question2 || null,
-      question3: data.question3 || null,
-      question4: data.question4 || null,
-      question5: data.question5 || null,  
-      question6: data.question6 || null   
-    };
-
-    submissions.push(newSubmission);
-    await fs.writeJson(submissionsFile, submissions, { spaces: 2 });
-
-    stats.totalSubmissions += 1;
-    stats.sumOfPercentages += newSubmission.percentage;
-    stats.averagePercentage = stats.sumOfPercentages / stats.totalSubmissions;
-
     const clicksData = await fs.readJson(clicksFile).catch(() => ({ totalClicks: 0 }));
-    const totalSubmissionsCount = stats.totalSubmissions;
-    const totalClicks = clicksData.totalClicks;
-    stats.completionRate = totalClicks > 0 
-        ? (totalSubmissionsCount / totalClicks) * 100
-        : 0;
-
-    await fs.writeJson(statsFile, stats, { spaces: 2 });
-
-    res.json({
-      status: "success",
-      totalSubmissions: stats.totalSubmissions,
-      averagePercentage: stats.averagePercentage,
-      completionRate: stats.completionRate
-    });
+    res.json({ totalClicks: clicksData.totalClicks });
   } catch (err) {
-    console.error("Error submitting quiz:", err);
+    console.error("Error reading clicks:", err);
     res.status(500).json({ status: "error", message: err.message });
   }
 });
 
-// Get quiz statistics (optional - for displaying stats publicly)
-app.get("/api/quiz-stats", async (req, res) => {
-  try {
-    const stats = await fs.readJson(statsFile).catch(() => ({
-      totalSubmissions: 0,
-      averagePercentage: 0,
-      completionRate: 0
-    }));
-    res.json(stats);
-  } catch (err) {
-    console.error("Error reading stats:", err);
-    res.status(500).json({ status: "error", message: "Failed to retrieve stats" });
+// ========================================
+// ADMIN AUTH API (密码验证)
+// ========================================
+
+app.post("/api/admin/verify", (req, res) => {
+  const { password } = req.body;
+  
+  if (!password) {
+    return res.status(400).json({ 
+      success: false, 
+      message: "Password is required" 
+    });
+  }
+  
+  // 验证密码
+  if (password === ADMIN_PASSWORD) {
+    // 生成随机 token (32 字节)
+    const token = crypto.randomBytes(32).toString('hex');
+    
+    // 存储 token 及创建时间（15分钟有效期）
+    validTokens.set(token, {
+      createdAt: Date.now(),
+      expiresAt: Date.now() + (15 * 60 * 1000) // 15分钟后过期
+    });
+    
+    console.log(`✅ Admin token generated: ${token.substring(0, 8)}...`);
+    
+    res.json({ 
+      success: true, 
+      token: token,
+      expiresIn: 900 // 秒
+    });
+  } else {
+    // 密码错误
+    console.warn(`❌ Failed admin login attempt`);
+    res.status(401).json({ 
+      success: false, 
+      message: "Invalid password" 
+    });
   }
 });
 
 // ========================================
-// ADMIN-ONLY APIs (Token Required)
+// ADMIN TOKEN 验证中间件
 // ========================================
 
-// Middleware to check admin token
 function requireAdminToken(req, res, next) {
   const token = req.headers['x-admin-token'];
   
-  if (!token || token !== ADMIN_TOKEN) {
-    return res.status(403).json({ 
-      status: "error", 
-      message: "Admin access required. Invalid or missing X-ADMIN-TOKEN header." 
+  if (!token) {
+    return res.status(401).json({ 
+      success: false, 
+      message: "Admin token required. Please login first." 
     });
   }
   
+  // 检查 token 是否存在且未过期
+  const tokenData = validTokens.get(token);
+  
+  if (!tokenData) {
+    return res.status(401).json({ 
+      success: false, 
+      message: "Invalid token. Please login again." 
+    });
+  }
+  
+  if (Date.now() > tokenData.expiresAt) {
+    validTokens.delete(token); // 删除过期 token
+    return res.status(401).json({ 
+      success: false, 
+      message: "Token expired. Please login again." 
+    });
+  }
+  
+  // Token 有效，继续处理请求
   next();
 }
 
-// Export submissions as CSV
-app.post("/api/admin/export-submissions", requireAdminToken, async (req, res) => {
-  try {
-    const submissions = await fs.readJson(submissionsFile).catch(() => []);
+// ========================================
+// ADMIN-ONLY APIs (需要有效 token)
+// ========================================
 
-    if (submissions.length === 0) {
-      return res.status(404).send("No submission data to export.");
-    }
-
-    const parser = new Parser();
-    const csv = parser.parse(submissions);
-
-    res.header("Content-Type", "text/csv");
-    res.attachment("quiz_submissions.csv"); 
-    res.send(csv);
-    
-  } catch (err) {
-    console.error("Error exporting submissions:", err);
-    res.status(500).json({ status: "error", message: "Failed to export submissions." });
-  }
+// 注销（删除 token）
+app.post("/api/admin/logout", requireAdminToken, (req, res) => {
+  const token = req.headers['x-admin-token'];
+  validTokens.delete(token);
+  console.log(`🔓 Admin token revoked`);
+  res.json({ success: true, message: "Logged out successfully" });
 });
 
-// Export stats as CSV
-app.post("/api/admin/export-stats", requireAdminToken, async (req, res) => {
-  try {
-    const stats = await fs.readJson(statsFile).catch(() => ({
-      totalSubmissions: 0,
-      sumOfPercentages: 0,
-      averagePercentage: 0,
-      completionRate: 0
-    }));
-
-    const statsArray = [stats];
-    const parser = new Parser();
-    const csv = parser.parse(statsArray);
-
-    res.header("Content-Type", "text/csv");
-    res.attachment("quiz_stats.csv");
-    res.send(csv); 
-  } catch (err) {
-    console.error("Error exporting stats:", err);
-    res.status(500).json({ status: "error", message: "Failed to export stats." });
-  }
+// 检查 token 有效性
+app.get("/api/admin/verify-token", requireAdminToken, (req, res) => {
+  const token = req.headers['x-admin-token'];
+  const tokenData = validTokens.get(token);
+  
+  res.json({ 
+    success: true, 
+    expiresAt: tokenData.expiresAt,
+    remainingTime: Math.floor((tokenData.expiresAt - Date.now()) / 1000)
+  });
 });
 
 // ========================================
-// LEGACY ENDPOINTS (Keep for compatibility)
+// Token 清理任务 (每小时清理过期 token)
 // ========================================
 
-// Old endpoints redirect to new APIs
-app.post("/save-click", (req, res) => {
-  req.url = "/api/track-click";
-  app.handle(req, res);
-});
-
-app.post("/submit-quiz", (req, res) => {
-  req.url = "/api/submit-quiz";
-  app.handle(req, res);
-});
-
-// Old export endpoints (GET) - kept for backward compatibility
-app.get("/export/submissions",requireAdminToken, async (req, res) => {
-  try {
-    const submissions = await fs.readJson(submissionsFile).catch(() => []);
-    if (submissions.length === 0) {
-      return res.status(404).send("No submission data to export.");
+setInterval(() => {
+  const now = Date.now();
+  let expiredCount = 0;
+  
+  for (const [token, data] of validTokens.entries()) {
+    if (now > data.expiresAt) {
+      validTokens.delete(token);
+      expiredCount++;
     }
-    const parser = new Parser();
-    const csv = parser.parse(submissions);
-    res.header("Content-Type", "text/csv");
-    res.attachment("quiz_submissions.csv"); 
-    res.send(csv);
-  } catch (err) {
-    console.error("Error exporting submissions:", err);
-    res.status(500).json({ status: "error", message: "Failed to export data." });
   }
-});
-
-app.get("/export/stats",requireAdminToken, async (req, res) => {
-  try {
-    const stats = await fs.readJson(statsFile).catch(() => ({
-      totalSubmissions: 0,
-      sumOfPercentages: 0,
-      averagePercentage: 0,
-      completionRate: 0
-    }));
-    const statsArray = [stats];
-    const parser = new Parser();
-    const csv = parser.parse(statsArray);
-    res.header("Content-Type", "text/csv");
-    res.attachment("quiz_stats.csv");
-    res.send(csv); 
-  } catch (err) {
-    console.error("Error exporting stats:", err);
-    res.status(500).json({ status: "error", message: "Failed to export stats." });
+  
+  if (expiredCount > 0) {
+    console.log(`🧹 Cleaned up ${expiredCount} expired tokens`);
   }
-});
+}, 60 * 60 * 1000); // 每小时执行一次
 
 // ========================================
 // Start Server
 // ========================================
 
 app.listen(PORT, () => {
-  const url = `http://localhost:${PORT}/MainPage.html`;
+  const url = `http://localhost:${PORT}/index.html`;
   console.log(`✅ Server running at http://localhost:${PORT}`);
-  console.log(`📊 Admin token: ${ADMIN_TOKEN}`);
-  console.log(`🔓 Public APIs: /api/track-click, /api/submit-quiz`);
-  console.log(`🔒 Admin APIs: /api/admin/export-submissions, /api/admin/export-stats`);
+  //console.log(`🔒 Admin password: ${ADMIN_PASSWORD}`);
+  console.log(`🔐 Admin login: POST /api/admin/verify`);
+  console.log(`📊 Data source: Supabase only (no local JSON files)`);
   console.log(`Opening ${url}...`);
   
   exec(`start ${url}`, (err) => {
