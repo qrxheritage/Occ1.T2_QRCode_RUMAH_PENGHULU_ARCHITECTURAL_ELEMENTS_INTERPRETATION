@@ -145,18 +145,21 @@ const content = {
                         '<p style="font-weight: bold; color: #333; margin-bottom: 10px;">' + langContent.hotspot1.points[1] + '</p>' +
                         '<img src="https://i.imgur.com/8cWPBhX.png" style="width: 100%; border-radius: 8px; margin-bottom: 15px;">';
                 } else if (hotspotId === 'question') {
-                    infoTitle.textContent = langContent.question.title;
-                    infoImage.style.display = 'none';
-                    infoContent.innerHTML = '';
-                    questionOptions.style.display = 'grid';
                     
-                    langContent.question.options.forEach((option, index) => {
-                        const btn = document.createElement('button');
-                        btn.className = 'option-btn';
-                        btn.textContent = option;
-                        btn.addEventListener('click', () => handleAnswer(index, langContent.question));
-                        questionOptions.appendChild(btn);
-                    });
+                const questionData = langContent.question;
+                infoTitle.textContent = questionData.title;
+                infoPanel.classList.add('quiz-mode'); 
+                infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
+                questionOptions.style.display = 'grid';
+            
+                questionData.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;                    
+                btn.addEventListener('click', () => handleAnswer(index, questionData));
+                questionOptions.appendChild(btn);
+                });
+            
                 }
                 
                 infoPanel.classList.add('active');

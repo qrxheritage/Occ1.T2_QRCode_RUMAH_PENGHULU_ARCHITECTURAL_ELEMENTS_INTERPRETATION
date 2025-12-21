@@ -177,7 +177,6 @@ const content = {
                         const btn = document.createElement('button');
                         btn.className = 'option-btn';
                         btn.textContent = option;
-                        // Attach the modified answer handler
                         btn.addEventListener('click', () => handleAnswer(index, questionData));
                         questionOptions.appendChild(btn);
                     });
