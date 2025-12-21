@@ -149,7 +149,7 @@ const content = {
                 const questionData = langContent.question;
                 infoTitle.textContent = questionData.title;
                 infoPanel.classList.add('quiz-mode'); 
-                infoContent.innerHTML = '<p>' + questionData.questionText + '</p>';
+                infoContent.innerHTML = '<p><strong>' + questionData.questionText + '</strong></p>';
                 questionOptions.style.display = 'grid';
             
                 questionData.options.forEach((option, index) => {
