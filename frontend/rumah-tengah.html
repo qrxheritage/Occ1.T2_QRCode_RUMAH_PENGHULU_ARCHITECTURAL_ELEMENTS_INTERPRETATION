@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Tengah - Middle Room</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="./rumah-tengah.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span id="backBtnText">Back to Tour</span>
+            </a>
+
+            <div class="language-buttons">
+                <button class="lang-btn active" onclick="changeLanguage('en', this)">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <button class="lang-btn" onclick="changeLanguage('ms', this)">
+                    <i class="fas fa-globe"></i> Melayu
+                </button>
+                <button class="lang-btn" onclick="changeLanguage('zh', this)">
+                    <i class="fas fa-globe"></i> 中文
+                </button>
+            </div>
+            <h1><span id="pageTitle">Rumah Tengah — Middle Room</span></h1>
+        </div>
+
+        <div class="content">
+            <div class="intro-section">
+                <p id="introText">
+                    The Rumah Tengah serves as a domestic area where women traditionally carry out household chores. Its floor is lower than that of the Rumah Ibu, and separate stairways connect the two sections. Carvings and windows in this area are simpler and less ornate, reflecting its domestic function.
+                </p>
+            </div>
+
+            <div class="image-container">
+                <img src="https://i.imgur.com/7fbNofg.jpeg" alt="Rumah Tengah">
+                
+                <div class="hotspot hotspot-dapur" data-hotspot="1">
+                    <i class="fas fa-fire-burner"></i>
+                    <div class="hotspot-preview top">
+                        <img src="https://i.imgur.com/odV3sHi.png" alt="Preview" class="preview-thumbnail">
+                        <div class="preview-title" id="preview1">Dapur (Kitchen)</div>            
+                    </div>
+                </div>
+                
+               <div class="hotspot hotspot-utensils" data-hotspot="2">
+                    <i class="fas fa-utensils"></i>
+                    <div class="hotspot-preview top">
+                        <img src="https://i.imgur.com/EuXioQu.png" alt="Preview" class="preview-thumbnail">
+                        <div class="preview-title" id="preview2">Cooking Utensils</div>
+                    </div>
+                </div>
+
+                <div class="hotspot question hotspot-quiz" data-hotspot="question">
+                    <i class="fas fa-brain"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <button class="close-btn" id="closeBtn">×</button>
+        <h3 id="infoTitle"></h3>
+        
+        <img id="infoImage" src="" alt="" style="display:none;">
+        <div class="info-content-wrapper" id="infoContent"></div>
+        
+        <div class="question-options" id="questionOptions"></div>
+        <div class="explanation" id="explanation">
+            <p id="explanationText"></p>
+        </div>
+    </div>
+
+    <script src="./rumah-tengah.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilik Tidur - Bedroom</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="./bilik-tidur.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> <span id="backBtnText">Back to Tour</span>
+            </a>
+
+            <div class="language-buttons">
+                <button class="lang-btn active" onclick="changeLanguage('en', this)">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <button class="lang-btn" onclick="changeLanguage('ms', this)">
+                    <i class="fas fa-globe"></i> Melayu
+                </button>
+                <button class="lang-btn" onclick="changeLanguage('zh', this)">
+                    <i class="fas fa-globe"></i> 中文
+                </button>
+            </div>
+            <h1><span id="pageTitle">Bilik Tidur — Bedroom</span></h1>
+        </div>
+
+        <div class="content">
+            <div class="intro-section">
+                <p id="introText">
+                    In traditional Malay homes, family members usually sleep on mengkuang mats placed on the floor. However, because the penghulu held a respected social position, this house includes beds. One of the bedrooms features a three-sided brass bed, while another is furnished with a simpler timber bed. This reflects the penghulu's status and the blend of practicality and formality in the home.
+                </p>
+            </div>
+
+            <div class="image-container">
+                <img src="https://i.imgur.com/gYV3a2s.jpeg" alt="Bilik Tidur">
+                
+                <div class="hotspot hotspot-bed" data-hotspot="1">
+                    <i class="fas fa-bed"></i>
+                    <div class="hotspot-preview top">
+                        <img src="https://i.imgur.com/Pnp0OAa.png" alt="Preview" class="preview-thumbnail">
+                        <div class="preview-title" id="preview1">Three-sided brass bed</div>            
+                    </div>
+                </div>
+
+                <div class="hotspot question hotspot-quiz" data-hotspot="question">
+                    <i class="fas fa-brain"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <button class="close-btn" id="closeBtn">×</button>
+        <h3 id="infoTitle"></h3>
+        <img id="infoImage" src="" alt="" style="display:none;">
+        <div id="infoContent"></div>
+        <div class="question-options" id="questionOptions"></div>
+        <div class="explanation" id="explanation">
+            <p id="explanationText"></p>
+        </div>
+    </div>
+
+    <script src="./bilik-tidur.js"></script>
+</body>
+</html>

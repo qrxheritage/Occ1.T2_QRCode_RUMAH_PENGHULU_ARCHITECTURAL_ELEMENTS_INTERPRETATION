@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Penghulu Abu Seman - Interactive Tour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="./MainPage.css">
+    <style>
+        /* Admin export */
+        #export-submissions-btn,
+        #export-stats-btn {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease, color 0.2s ease;
+        }
+        
+        #export-submissions-btn:hover,
+        #export-stats-btn:hover {
+            color: var(--primary-orange);
+        }
+        
+        #export-submissions-btn i,
+        #export-stats-btn i {
+            transition: transform 0.2s ease;
+        }
+        
+        #export-submissions-btn:hover i,
+        #export-stats-btn:hover i {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="home-section">
+        <div class="language-buttons">
+            <button class="lang-btn active" onclick="changeLanguage('en', this)">
+                <i class="fas fa-globe"></i> English
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('ms', this)">
+                <i class="fas fa-globe"></i> Melayu
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('zh', this)">
+                <i class="fas fa-globe"></i> 中文
+            </button>
+        </div>
+        <h1 id="mainTitle">Discover the Legacy of Rumah Penghulu Abu Seman</h1>
+        
+        <a href="javascript:void(0)" class="btn-explore" onclick="revealContent()">
+            <span id="exploreBtnText">Start Exploring</span> <i class="fas fa-chevron-down"></i>
+        </a>
+    </header>
+
+    <div class="container" id="main-content-container">
+        
+        <div class="intro-card">
+            <h3 id="introCardTitle">The Headman's Heritage</h3>
+            <p class="intro-text" id="introText">
+                The Rumah Penghulu Abu Seman was built in stages between 1910 and the early 1930s. 
+                Owned by the local headman of Mukim Bagan Samak, Bandar Baharu, Kedah. Originally 
+                located in Kampung Sungai Kechil, this traditional Malay house stands as a testament 
+                to the rich architectural heritage and cultural traditions of the region.
+            </p>
+        </div>
+
+        <h2 class="section-title" id="sectionTitle">Explore the Traditional Spaces</h2>
+        
+        <div class="rooms-grid" id="room-section">
+            <div class="room-card" onclick="navigateToRoom('rumah-ibu')">
+                <div class="room-image-wrapper">
+                    <img src="https://badanwarisanmalaysia.org/wp-content/uploads/2015/01/rumah-ibu.jpg?w=1024" alt="Rumah Ibu">
+                </div>
+                <div class="room-card-content">
+                    <div>
+                        <h3 id="room1Title">Rumah Ibu</h3>
+                        <p class="room-description" id="room1Desc">The main house, serving as the central living and social area for the family.</p>
+                    </div>
+                    <span class="view-btn"><span class="view-text">View Details</span> <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="room-card" onclick="navigateToRoom('rumah-tengah')">
+                <div class="room-image-wrapper">
+                    <img src="https://i.imgur.com/RbtxNZi.jpeg" alt="Rumah Tengah">
+                </div>
+                <div class="room-card-content">
+                    <div>
+                        <h3 id="room2Title">Rumah Tengah</h3>
+                        <p class="room-description" id="room2Desc">The middle house, typically connected to the main house and containing additional family rooms.</p>
+                    </div>
+                    <span class="view-btn"><span class="view-text">View Details</span> <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="room-card" onclick="navigateToRoom('bilik-tidur')">
+                <div class="room-image-wrapper">
+                    <img src="https://i.imgur.com/q1yyL85.jpeg" alt="Bilik Tidur">
+                </div>
+                <div class="room-card-content">
+                    <div>
+                        <h3 id="room3Title">Bilik Tidur</h3>
+                        <p class="room-description" id="room3Desc">Dedicated sleeping quarters, often adorned with traditional wooden carvings and lattice work.</p>
+                    </div>
+                    <span class="view-btn"><span class="view-text">View Details</span> <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+            
+        </div>
+        
+        <hr class="separator">
+
+        <h2 class="section-title" id="actionTitle">Your Next Steps</h2> 
+        <div class="action-container">
+            <div class="action-card quiz" onclick="openQuiz()">
+                <i class="fas fa-brain fa-3x"></i>
+                <div>
+                    <h3 id="quizTitle">Challenge Yourself!</h3>
+                    <p id="quizText">Test your knowledge about traditional Malay architecture before providing your feedback.</p>
+                </div>
+                <button class="btn-action" id="quizBtn">Start Quiz</button>
+            </div>
+            
+            <div class="action-card feedback" onclick="openFeedback()">
+                <i class="fas fa-comment-dots fa-3x"></i>
+                <div class="feedback-content">
+                    <h3 id="feedbackTitle">Help Us Improve</h3>
+                    <p id="feedbackText">Once you've explored the rooms and tested your knowledge, share your thoughts and experiences with us.</p>
+                </div>
+                <button class="btn-action" id="feedbackBtn">Give Feedback</button>
+            </div>
+        </div>
+        
+        <!-- Admin Export Buttons (hiring，Ctrl+Shift+A to activate) -->
+        <div style="display: flex; gap: 40px; justify-content: flex-start; max-width: 900px; margin: -30px auto 40px;">        
+            <button 
+                id="export-submissions-btn" 
+                onclick="exportSubmissions()">
+                <i class="fas fa-download"></i> Export Submissions Data
+            </button>
+            
+            <button 
+                id="export-stats-btn" 
+                onclick="exportStats()">
+                <i class="fas fa-download"></i> Export Quiz Stats
+            </button>       
+        </div>
+
+        <div class="credit" id="creditText">
+            Courtesy of Badan Warisan Malaysia.
+        </div>
+    </div>
+    
+    <button class="info-button" onclick="toggleInfo()">
+        <i class="fas fa-lightbulb"></i>
+    </button>
+
+    <div class="info-card" id="infoCard">
+        <button class="close-info" onclick="toggleInfo()"><i class="fas fa-times"></i></button>
+        <h4 id="infoTitle"><i class="fas fa-question-circle"></i> Do you know?</h4>
+        <div class="image-wrapper">
+            <img src="https://i.imgur.com/mFwJEwx.png" alt="Entrance Arch">
+        </div>
+        <p id="infoText">
+            The <strong>low arch at the entrance</strong> requires visitors to bow slightly—a gesture reflecting traditional values of <strong>humility and respect</strong>.
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./supabase-client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="./MainPage.js"></script>
+</body>
+</html>
